@@ -9,6 +9,6 @@ public class DesktopLauncher {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Tank_Stars");
         config.setWindowedMode(800,400);
-        new Lwjgl3Application((ApplicationListener) new Tank_Stars_Game(),config);
+        new Lwjgl3Application(new Tank_Stars_Game(),config);
     }
 }

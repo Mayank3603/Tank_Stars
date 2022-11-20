@@ -12,13 +12,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-public class Tank_Stars_Game implements Screen, InputProcessor,ApplicationListener {
+public class Tank_Stars_Game implements InputProcessor,ApplicationListener {
 
 	private  Main_Screen main;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private final Sprite starting_screen;
-	private final Sprite loading_sign;
+	private Sprite starting_screen;
+	private Sprite loading_sign;
 
 	private float w;
 	private float h;
@@ -28,10 +28,8 @@ public class Tank_Stars_Game implements Screen, InputProcessor,ApplicationListen
 	private BitmapFont font1;
 	private BitmapFont font2;
 
-
-
-
-	public Tank_Stars_Game () {
+	@Override
+	public void create() {
 		this.w = (float)Gdx.graphics.getWidth();
 		this.h = (float)Gdx.graphics.getHeight();
 //		Gdx.input.setInputProcessor(this);
@@ -54,14 +52,8 @@ public class Tank_Stars_Game implements Screen, InputProcessor,ApplicationListen
 		loading_sign.setSize(150,60);
 		loading_sign.setPosition(330f,10f);
 	}
-
 	@Override
-	public void show() {
-
-	}
-
-	@Override
-	public void render(float delta) {
+	public void render() {
 		Gdx.gl.glClearColor(1.0f,1.0f,1.0f,1.0f);
 		Gdx.gl.glClear(16384);
 		batch.setProjectionMatrix(this.camera.combined);
@@ -70,15 +62,11 @@ public class Tank_Stars_Game implements Screen, InputProcessor,ApplicationListen
 		loading_sign.draw(batch);
 		font1.draw(batch,"Welcome to Tank Stars",220,360);
 		font2.draw(batch,"Click Anywhere to start",240,330);
-		batch.end();
 		if (Gdx.input.isTouched()){
 			main = new Main_Screen();
 
 		}
-	}
-
-	@Override
-	public void create() {
+		batch.end();
 
 	}
 
@@ -87,10 +75,6 @@ public class Tank_Stars_Game implements Screen, InputProcessor,ApplicationListen
 
 	}
 
-	@Override
-	public void render() {
-
-	}
 
 
 	@Override
@@ -103,10 +87,7 @@ public class Tank_Stars_Game implements Screen, InputProcessor,ApplicationListen
 
 	}
 
-	@Override
-	public void hide() {
 
-	}
 
 	@Override
 	public void dispose () {
