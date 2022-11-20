@@ -3,27 +3,29 @@ package com.tank_stars.game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Tank_Stars_Game implements ApplicationListener, InputProcessor {
+public class Tank_Stars_Game implements Screen, InputProcessor {
 
+	private  Main_Screen main;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Sprite starting_screen;
-	private Sprite loading_sign;
-	private BitmapFont welcome;
-	private BitmapFont touch;
+	private final Sprite starting_screen;
+	private final Sprite loading_sign;
+	private final BitmapFont welcome;
+	private final BitmapFont touch;
 	private float w;
 	private float h;
 
 
 
-	@Override
-	public void create () {
+
+	public Tank_Stars_Game () {
 		this.w = (float)Gdx.graphics.getWidth();
 		this.h = (float)Gdx.graphics.getHeight();
 //		Gdx.input.setInputProcessor(this);
@@ -39,25 +41,33 @@ public class Tank_Stars_Game implements ApplicationListener, InputProcessor {
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void show() {
 
 	}
 
 	@Override
-	public void render () {
-			Gdx.gl.glClearColor(1.0f,1.0f,1.0f,1.0f);
-			Gdx.gl.glClear(16384);
-			batch.setProjectionMatrix(this.camera.combined);
-			batch.begin();
-			starting_screen.draw(batch);
-			loading_sign.draw(batch);
-			welcome.draw(batch,"WELCOME TO TANK_STARS",290,360);
-			touch.draw(batch,"CLICK ANYWHERE",320,340);
-			batch.end();
-			if (Gdx.input.isTouched()){
+	public void render(float delta) {
+		Gdx.gl.glClearColor(1.0f,1.0f,1.0f,1.0f);
+		Gdx.gl.glClear(16384);
+		batch.setProjectionMatrix(this.camera.combined);
+		batch.begin();
+		starting_screen.draw(batch);
+		loading_sign.draw(batch);
+		welcome.draw(batch,"WELCOME TO TANK_STARS",290,360);
+		touch.draw(batch,"CLICK ANYWHERE",320,340);
+		batch.end();
+		if (Gdx.input.isTouched()){
+			main = new Main_Screen();
 
-			}
+		}
 	}
+
+	@Override
+	public void resize(int width, int height) {
+
+	}
+
+
 
 	@Override
 	public void pause() {
@@ -66,6 +76,11 @@ public class Tank_Stars_Game implements ApplicationListener, InputProcessor {
 
 	@Override
 	public void resume() {
+
+	}
+
+	@Override
+	public void hide() {
 
 	}
 
