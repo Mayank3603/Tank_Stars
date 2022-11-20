@@ -7,7 +7,7 @@ public class DesktopLauncher {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Tank_Stars");
-        config.setWindowedMode(1600,800);
+        config.setWindowedMode(800,400);
         new Lwjgl3Application(new Tank_Stars_Game(),config);
     }
 }

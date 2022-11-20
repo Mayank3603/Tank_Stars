@@ -1,19 +1,21 @@
 package com.tank_stars.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
-import  com.tank_stars.game.InputManager;
-import  com.tank_stars.game.GameManager;
-public class Tank_Stars_Game  implements ApplicationListener {
+
+public class Tank_Stars_Game implements ApplicationListener, InputProcessor {
 
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
+	private Sprite starting_screen;
+	private Sprite loading_sign;
+	private BitmapFont font;
 	private float w;
 	private float h;
 
@@ -23,8 +25,13 @@ public class Tank_Stars_Game  implements ApplicationListener {
 	public void create () {
 		this.w = (float)Gdx.graphics.getWidth();
 		this.h = (float)Gdx.graphics.getHeight();
+//		Gdx.input.setInputProcessor(this);
 		(this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
-		GameManager.initialize(this.w,this.h);
+		batch = new SpriteBatch();
+		font = new BitmapFont();
+		starting_screen = new Sprite(new Texture("starting_screen.jpg"));
+		starting_screen.setSize(800,400);
+
 	}
 
 	@Override
@@ -36,11 +43,12 @@ public class Tank_Stars_Game  implements ApplicationListener {
 	public void render () {
 			Gdx.gl.glClearColor(1.0f,1.0f,1.0f,1.0f);
 			Gdx.gl.glClear(16384);
-			this.batch.setProjectionMatrix(this.camera.combined);
-			InputManager.handleInput(this.camera);
-			this.batch.begin();
-			GameManager.rendergame(this.batch);
-			this.batch.end();
+			batch.setProjectionMatrix(this.camera.combined);
+			batch.begin();
+			starting_screen.draw(batch);
+			font.draw(batch,"WELCOME TO TANK_STARS",290,360);
+			batch.end();
+
 	}
 
 	@Override
@@ -56,6 +64,45 @@ public class Tank_Stars_Game  implements ApplicationListener {
 	@Override
 	public void dispose () {
 		this.batch.dispose();
-		GameManager.dispose();
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(float amountX, float amountY) {
+		return false;
 	}
 }
