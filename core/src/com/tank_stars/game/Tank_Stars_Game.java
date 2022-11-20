@@ -15,7 +15,8 @@ public class Tank_Stars_Game implements ApplicationListener, InputProcessor {
 	private SpriteBatch batch;
 	private Sprite starting_screen;
 	private Sprite loading_sign;
-	private BitmapFont font;
+	private BitmapFont welcome;
+	private BitmapFont touch;
 	private float w;
 	private float h;
 
@@ -28,10 +29,13 @@ public class Tank_Stars_Game implements ApplicationListener, InputProcessor {
 //		Gdx.input.setInputProcessor(this);
 		(this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
 		batch = new SpriteBatch();
-		font = new BitmapFont();
+		welcome = new BitmapFont();
+		touch = new BitmapFont();
 		starting_screen = new Sprite(new Texture("starting_screen.jpg"));
+		loading_sign = new Sprite(new Texture("loading_screen.jpg"));
 		starting_screen.setSize(800,400);
-
+		loading_sign.setSize(150,60);
+		loading_sign.setPosition(330f,10f);
 	}
 
 	@Override
@@ -46,9 +50,13 @@ public class Tank_Stars_Game implements ApplicationListener, InputProcessor {
 			batch.setProjectionMatrix(this.camera.combined);
 			batch.begin();
 			starting_screen.draw(batch);
-			font.draw(batch,"WELCOME TO TANK_STARS",290,360);
+			loading_sign.draw(batch);
+			welcome.draw(batch,"WELCOME TO TANK_STARS",290,360);
+			touch.draw(batch,"CLICK ANYWHERE",320,340);
 			batch.end();
+			if (Gdx.input.isTouched()){
 
+			}
 	}
 
 	@Override
