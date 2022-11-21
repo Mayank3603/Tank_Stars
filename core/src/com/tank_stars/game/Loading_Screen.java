@@ -36,20 +36,20 @@ public class Loading_Screen implements Screen {
         this.batch = new SpriteBatch();
         fontGenerator=new FreeTypeFontGenerator(Gdx.files.internal("yankclipper2.ttf"));
         fontParameter1=new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter1.size=30;
+        fontParameter1.size=60;
         fontParameter1.color= Color.BLACK;
         font1=fontGenerator.generateFont(fontParameter1);
 
         fontParameter2=new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter2.size=15;
+        fontParameter2.size=30;
         fontParameter2.color= Color.BLACK;
         font2=fontGenerator.generateFont(fontParameter2);
 
         starting_screen = new Sprite(new Texture("starting_screen.jpg"));
         loading_sign = new Sprite(new Texture("loading_screen.jpg"));
         starting_screen.setSize(this.w,this.h);
-        loading_sign.setSize(150,60);
-        loading_sign.setPosition(330f,10f);
+        loading_sign.setSize(this.w/5,this.h/10);
+        loading_sign.setPosition(this.w/3+2*this.w/24,this.h/30);
     }
 
 
@@ -69,8 +69,8 @@ public class Loading_Screen implements Screen {
         batch.begin();
         starting_screen.draw(batch);
         loading_sign.draw(batch);
-        font1.draw(batch,"Welcome to Tank Stars",this.w/2-100,this.h/2+130);
-        font2.draw(batch,"Click Anywhere to start...",(this.w/2-100)+30,this.h/2+100);
+        font1.draw(batch,"Welcome to Tank Stars",7*this.w/20,4*this.h/5+this.h/20);
+        font2.draw(batch,"Click Anywhere to start...",this.w/3+this.w/10,4*this.h/5-this.h/20);
         batch.end();
         if (Gdx.input.isTouched()){
             tank_stars_game.setScreen(new Main_Screen(tank_stars_game));

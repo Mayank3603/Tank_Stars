@@ -30,12 +30,12 @@ public class Main_Screen implements Screen{
         this.resume_button = new Sprite(new Texture("resume_game.png"));
         this.exit_button = new Sprite(new Texture("exit_game.png"));
         this.main_menu_screen.setSize(this.w,this.h);
-        this.play_button.setSize(150,50);
-        this.play_button.setPosition(this.w/10-50,this.h/40);
-        this.resume_button.setSize(150,50);
-        this.resume_button.setPosition(4*(this.w/10)-50,this.h/40);
-        this.exit_button.setSize(150,50);
-        this.exit_button.setPosition(7*(this.w/10)-50,this.h/40);
+        this.play_button.setSize(this.w/6,this.h/12);
+        this.play_button.setPosition(this.w/10,this.h/30);
+        this.resume_button.setSize(this.w/6,this.h/12);
+        this.resume_button.setPosition((this.w/10)+this.w/3,this.h/30);
+        this.exit_button.setSize(this.w/6,this.h/12);
+        this.exit_button.setPosition((this.w/10)+2*this.w/3,this.h/30);
     }
 
 
