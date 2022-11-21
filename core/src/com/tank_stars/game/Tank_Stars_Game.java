@@ -1,136 +1,27 @@
 package com.tank_stars.game;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-public class Tank_Stars_Game implements InputProcessor,ApplicationListener {
+public class Tank_Stars_Game extends Game {
 
-	private  Main_Screen main;
-	private OrthographicCamera camera;
-	private SpriteBatch batch;
-	private Sprite starting_screen;
-	private Sprite loading_sign;
+	public SpriteBatch batch;
+	public BitmapFont font;
 
-	private float w;
-	private float h;
-	private FreeTypeFontGenerator fontGenerator;
-	private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter1;
-	private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2;
-	private BitmapFont font1;
-	private BitmapFont font2;
-
-	@Override
 	public void create() {
-		this.w = (float)Gdx.graphics.getWidth();
-		this.h = (float)Gdx.graphics.getHeight();
-//		Gdx.input.setInputProcessor(this);
-		(this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
 		batch = new SpriteBatch();
-		fontGenerator=new FreeTypeFontGenerator(Gdx.files.internal("yankclipper2.ttf"));
-		fontParameter1=new FreeTypeFontGenerator.FreeTypeFontParameter();
-		fontParameter1.size=30;
-		fontParameter1.color= Color.BLACK;
-		font1=fontGenerator.generateFont(fontParameter1);
-
-		fontParameter2=new FreeTypeFontGenerator.FreeTypeFontParameter();
-		fontParameter2.size=30;
-		fontParameter2.color= Color.BLACK;
-		font2=fontGenerator.generateFont(fontParameter2);
-
-		starting_screen = new Sprite(new Texture("starting_screen.jpg"));
-		loading_sign = new Sprite(new Texture("loading_screen.jpg"));
-		starting_screen.setSize(800,400);
-		loading_sign.setSize(150,60);
-		loading_sign.setPosition(330f,10f);
+		font = new BitmapFont(); // use libGDX's default Arial font
+		this.setScreen(new Loading_Screen(this));
 	}
-	@Override
+
 	public void render() {
-		Gdx.gl.glClearColor(1.0f,1.0f,1.0f,1.0f);
-		Gdx.gl.glClear(16384);
-		batch.setProjectionMatrix(this.camera.combined);
-		batch.begin();
-		starting_screen.draw(batch);
-		loading_sign.draw(batch);
-		font1.draw(batch,"Welcome to Tank Stars",220,360);
-		font2.draw(batch,"Click Anywhere to start",240,330);
-		if (Gdx.input.isTouched()){
-			main = new Main_Screen();
-
-		}
-		batch.end();
-
+		super.render(); // important!
 	}
 
-	@Override
-	public void resize(int width, int height) {
-
+	public void dispose() {
+		batch.dispose();
+		font.dispose();
 	}
 
-
-
-	@Override
-	public void pause() {
-
-	}
-
-	@Override
-	public void resume() {
-
-	}
-
-
-
-	@Override
-	public void dispose () {
-		this.batch.dispose();
-	}
-
-	@Override
-	public boolean keyDown(int keycode) {
-		return false;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(float amountX, float amountY) {
-		return false;
-	}
 }
