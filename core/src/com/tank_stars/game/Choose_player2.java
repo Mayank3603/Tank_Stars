@@ -2,19 +2,34 @@ package com.tank_stars.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Vector3;
 
 public class Choose_player2 implements Screen {
 
-    final Tank_Stars_Game tank_stars_game;
+    final  Tank_Stars_Game tank_stars_game;
+    private Vector3 touchpos = new Vector3();
+
     private float w;
     private float h;
     private OrthographicCamera camera;
     private SpriteBatch batch;
-    private Sprite main_menu_screen;
+    private Sprite background;
+    private Sprite Helios_tank_image;
+    private Sprite Mark_1_tank_image;
+    private Sprite T_34_tank_image;
+
+    private FreeTypeFontGenerator fontGenerator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter1;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2;
+    private BitmapFont font1;
+    private BitmapFont font2;
 
     public Choose_player2(final Tank_Stars_Game tank_stars_game) {
         this.tank_stars_game = tank_stars_game;
@@ -22,7 +37,36 @@ public class Choose_player2 implements Screen {
         this.h = (float)Gdx.graphics.getHeight();
         (this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
         this.batch = new SpriteBatch();
-        this.main_menu_screen = new Sprite(new Texture("loading_screen.jpg"));
+        this.background = new Sprite(new Texture("back.jpeg"));
+        this.T_34_tank_image = new Sprite(new Texture("t_34_tank.jpg"));
+        this.Mark_1_tank_image = new Sprite(new Texture("Mark_tank.jpg"));
+        this.Helios_tank_image = new Sprite(new Texture("Helios_tank_.jpg"));
+        this.background.setSize(this.w,this.h);
+
+        this.Helios_tank_image.setSize(this.w/3-this.w/12,this.h/3);
+        this.Helios_tank_image.setPosition((this.w/12)-this.w/24,this.h/8);
+
+        this.T_34_tank_image.setSize(this.w/3-this.w/12,this.h/3);
+        this.T_34_tank_image.setPosition((this.w/12)+2*this.w/3-this.w/24,this.h/8);
+
+        this.Mark_1_tank_image.setSize(this.w/3-this.w/12,this.h/3);
+        this.Mark_1_tank_image.setPosition((this.w/12)+this.w/3-this.w/24,this.h/8);
+
+
+
+        fontGenerator=new FreeTypeFontGenerator(Gdx.files.internal("yankclipper2.ttf"));
+        fontParameter1=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter1.size= (int) (this.w/20);
+        fontParameter1.color= Color.BLACK;
+        fontParameter1.borderColor=Color.WHITE;
+        fontParameter1.borderWidth=(int)(this.w/240);
+        font1=fontGenerator.generateFont(fontParameter1);
+        fontParameter2=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter2.borderColor=Color.WHITE;
+        fontParameter2.borderWidth=(int)(this.w/240);
+        fontParameter2.size=(int)(this.w/8);
+        fontParameter2.color= Color.BLACK;
+        font2=fontGenerator.generateFont(fontParameter2);
     }
 
     @Override
@@ -36,9 +80,42 @@ public class Choose_player2 implements Screen {
         Gdx.gl.glClear(16384);
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
-        this.main_menu_screen.draw(batch);
+        this.background.draw(batch);
+        this.Helios_tank_image.draw(batch);
+        this.Mark_1_tank_image.draw(batch);
+        this.T_34_tank_image.draw(batch);
+        font1.draw(batch,"PLAYER-2:",this.w/100,this.h-this.h/20);
+        font2.draw(batch,"CHOOSE A TANK:",this.w/3-this.w/24,4*this.h/5-this.h/20);
+
+        font1.draw(batch,"HELIOS TANK",(this.w/12)-this.w/48,this.h/10);
+        font1.draw(batch,"MARK TANK",(this.w/12)+this.w/3,this.h/10);
+        font1.draw(batch,"T_34 TANK",(this.w/12)+2*this.w/3,this.h/10);
         this.batch.end();
-        System.out.println(tank_stars_game.getTank_1().name);
+        this.inputhandle();
+    }
+    public void inputhandle(){
+        if (Gdx.input.justTouched()){
+            this.touchpos.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            this.camera.unproject(touchpos);
+            if (touchpos.x >= (this.w/12)-this.w/24 && touchpos.x <= (this.w/12)-this.w/24+this.w/3-this.w/12 && touchpos.y >= this.h/8 && touchpos.y<=this.h/8+ this.h/3){
+
+                tank_stars_game.setTank_1(new Helios_Tank());
+                tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
+
+            }
+            else if (touchpos.x >= (this.w/12)+2*this.w/3-this.w/24&& touchpos.x <=  (this.w/12)+2*this.w/3-this.w/24+this.w/3-this.w/12&& touchpos.y >= this.h/8 && touchpos.y<=this.h/8+ this.h/3) {
+
+                tank_stars_game.setTank_1(new Mark_1_Tank());
+                tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
+
+            }
+            else if (touchpos.x >= (this.w/12)+this.w/3-this.w/24 && touchpos.x <= (this.w/12)+this.w/3-this.w/24+this.w/3-this.w/12&& touchpos.y >= this.h/8 && touchpos.y<=this.h/8+this.h/3) {
+
+                tank_stars_game.setTank_1(new T_34_Tank());
+                tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
+
+            }
+        }
     }
 
     @Override

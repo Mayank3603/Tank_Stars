@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 public class Loading_Screen implements Screen {
 
     final Tank_Stars_Game tank_stars_game;
-    private  Main_Screen main;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Sprite starting_screen;

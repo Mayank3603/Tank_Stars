@@ -38,7 +38,7 @@ public class Choose_Player1 implements Screen {
         this.h = (float)Gdx.graphics.getHeight();
         (this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
         this.batch = new SpriteBatch();
-        this.background = new Sprite(new Texture("tank_choose_screen_background.jpg"));
+        this.background = new Sprite(new Texture("back.jpeg"));
         this.T_34_tank_image = new Sprite(new Texture("t_34_tank.jpg"));
         this.Mark_1_tank_image = new Sprite(new Texture("Mark_tank.jpg"));
         this.Helios_tank_image = new Sprite(new Texture("Helios_tank_.jpg"));
@@ -92,7 +92,7 @@ public class Choose_Player1 implements Screen {
         font1.draw(batch,"MARK TANK",(this.w/12)+this.w/3,this.h/10);
         font1.draw(batch,"T_34 TANK",(this.w/12)+2*this.w/3,this.h/10);
         this.batch.end();
-        inputhandle();
+        this.inputhandle();
     }
 
     public void inputhandle(){

@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
+import java.io.IOException;
+
 public class Main_Screen implements Screen{
     final Tank_Stars_Game tank_stars_game;
     private Choose_Player1 choose_player1;
@@ -60,10 +62,14 @@ public class Main_Screen implements Screen{
         this.resume_button.draw(this.batch);
         this.exit_button.draw(this.batch);
         this.batch.end();
-        inputhandle();
+        try {
+            inputhandle();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-    
-    public void inputhandle(){
+
+    public void inputhandle() throws IOException {
         if (Gdx.input.justTouched()){
             this.touchpos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             this.camera.unproject(touchpos);
@@ -72,7 +78,8 @@ public class Main_Screen implements Screen{
                 tank_stars_game.setScreen(this.choose_player1);
             }
             else if (touchpos.x >= (this.w/10)+this.w/3 && touchpos.x <= (this.w/10)+this.w/3+this.w/6&& touchpos.y >= this.h/30 && touchpos.y<=this.h/30+ this.h/12) {
-                System.out.println("resume game");
+                tank_stars_game.setScreen(new Resume_Screen(tank_stars_game));
+
             }
             else if (touchpos.x >= (this.w/10)+2*this.w/3 && touchpos.x <= (this.w/10)+2*this.w/3+this.w/6&& touchpos.y >= this.h/30 && touchpos.y<=this.h/30+ this.h/12) {
                 System.out.println("exit game");
