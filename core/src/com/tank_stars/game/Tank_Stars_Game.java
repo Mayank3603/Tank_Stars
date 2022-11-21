@@ -8,7 +8,25 @@ public class Tank_Stars_Game extends Game {
 
 	public SpriteBatch batch;
 	public BitmapFont font;
+
+	public void setTank_1(Tank tank_1) {
+		this.tank_1 = tank_1;
+	}
+
+	public Tank getTank_1() {
+		return tank_1;
+	}
+
 	private Tank tank_1;
+
+	public void setTank_2(Tank tank_2) {
+		this.tank_2 = tank_2;
+	}
+
+	public Tank getTank_2() {
+		return tank_2;
+	}
+
 	private Tank tank_2;
 	private Weapons Airdrop;
 

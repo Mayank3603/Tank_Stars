@@ -4,6 +4,7 @@ public class Tank implements Fireweaponer {
     private int Fuel;
     private double Health;
     private double Angle;
+    public String name ;
     public void move(){
 
     }

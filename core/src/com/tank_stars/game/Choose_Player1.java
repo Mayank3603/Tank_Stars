@@ -31,7 +31,7 @@ public class Choose_Player1 implements Screen {
     private BitmapFont font2;
 
 
-    private int player_set = 0;
+
     public Choose_Player1(final Tank_Stars_Game tank_stars_game ){
         this.tank_stars_game = tank_stars_game;
         this.w = (float) Gdx.graphics.getWidth();
@@ -99,16 +99,20 @@ public class Choose_Player1 implements Screen {
         if (Gdx.input.justTouched()){
             this.touchpos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             this.camera.unproject(touchpos);
-            if (touchpos.x >= this.w/10 && touchpos.x <= this.h/30+this.w/6 && touchpos.y >= this.h/30 && touchpos.y<=this.h/30+ this.h/12){
+            if (touchpos.x >= (this.w/12)-this.w/24 && touchpos.x <= (this.w/12)-this.w/24+this.w/3-this.w/12 && touchpos.y >= this.h/8 && touchpos.y<=this.h/8+ this.h/3){
                 this.choose_player2 = new Choose_player2(tank_stars_game);
+                tank_stars_game.setTank_1(new Helios_Tank());
                 tank_stars_game.setScreen(this.choose_player2);
             }
-            else if (touchpos.x >= (this.w/10)+this.w/3 && touchpos.x <= (this.w/10)+this.w/3+this.w/6&& touchpos.y >= this.h/30 && touchpos.y<=this.h/30+ this.h/12) {
-                System.out.println("resume game");
+            else if (touchpos.x >= (this.w/12)+2*this.w/3-this.w/24&& touchpos.x <=  (this.w/12)+2*this.w/3-this.w/24+this.w/3-this.w/12&& touchpos.y >= this.h/8 && touchpos.y<=this.h/8+ this.h/3) {
+                this.choose_player2 = new Choose_player2(tank_stars_game);
+                tank_stars_game.setTank_1(new Mark_1_Tank());
+                tank_stars_game.setScreen(this.choose_player2);
             }
-            else if (touchpos.x >= (this.w/10)+2*this.w/3 && touchpos.x <= (this.w/10)+2*this.w/3+this.w/6&& touchpos.y >= this.h/30 && touchpos.y<=this.h/30+ this.h/12) {
-                System.out.println("exit game");
-                Gdx.app.exit();
+            else if (touchpos.x >= (this.w/12)+this.w/3-this.w/24 && touchpos.x <= (this.w/12)+this.w/3-this.w/24+this.w/3-this.w/12&& touchpos.y >= this.h/8 && touchpos.y<=this.h/8+this.h/3) {
+                this.choose_player2 = new Choose_player2(tank_stars_game);
+                tank_stars_game.setTank_1(new T_34_Tank());
+                tank_stars_game.setScreen(this.choose_player2);
             }
         }
     }

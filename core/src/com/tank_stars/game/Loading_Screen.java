@@ -74,6 +74,7 @@ public class Loading_Screen implements Screen {
         batch.end();
         if (Gdx.input.isTouched()){
             tank_stars_game.setScreen(new Main_Screen(tank_stars_game));
+            dispose();
         }
     }
 
@@ -103,9 +104,6 @@ public class Loading_Screen implements Screen {
     @Override
     public void dispose () {
         this.batch.dispose();
-        this.font1.dispose();
-        this.font2.dispose();
-        this.tank_stars_game.dispose();
     }
 
 

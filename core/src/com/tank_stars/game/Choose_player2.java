@@ -38,6 +38,7 @@ public class Choose_player2 implements Screen {
         this.batch.begin();
         this.main_menu_screen.draw(batch);
         this.batch.end();
+        System.out.println(tank_stars_game.getTank_1().name);
     }
 
     @Override
