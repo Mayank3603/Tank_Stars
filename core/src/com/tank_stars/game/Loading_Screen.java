@@ -46,7 +46,7 @@ public class Loading_Screen implements Screen  {
         fontParameter2.color= Color.BLACK;
         font2=fontGenerator.generateFont(fontParameter2);
 
-        starting_screen = new Sprite(new Texture("starting_screen.jpg"));
+        starting_screen = new Sprite(new Texture("starting_screen2.jpg"));
         loading_sign = new Sprite(new Texture("loading_screen.jpg"));
         starting_screen.setSize(this.w,this.h);
         loading_sign.setSize(this.w/5,this.h/10);

@@ -17,6 +17,7 @@ public class Game_Screen implements Screen {
     private SpriteBatch batch;
 
     private Sprite pause_button;
+    private Sprite background;
 
 
     private Sprite terror;
@@ -30,7 +31,11 @@ public class Game_Screen implements Screen {
         this.h = (float)Gdx.graphics.getHeight();
         (this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
         this.batch = new SpriteBatch();
+        this.terror = new Sprite(new Texture("terrain_red.png"));
+        this.terror.setSize(this.w,this.h/2);
+        this.background = new Sprite(new Texture("background.jpeg"));
         this.pause_button = new Sprite(new Texture("pause-button.jpg"));
+        this.background.setSize(this.w,this.h);
         this.pause_button.setSize(this.w/20,this.h/20);
         this.pause_button.setPosition((this.w/2),this.h-this.h/20);
 
@@ -47,7 +52,11 @@ public class Game_Screen implements Screen {
         Gdx.gl.glClear(16384);
         batch.setProjectionMatrix(this.camera.combined);
         batch.begin();
+        this.background.draw(this.batch);
+        this.terror.draw(this.batch);
         this.pause_button.draw(this.batch);
+
+
         batch.end();
         inputhandle();
     }

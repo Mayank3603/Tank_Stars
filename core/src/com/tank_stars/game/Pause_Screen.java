@@ -34,7 +34,7 @@ public class Pause_Screen implements Screen , Serializable {
         this.h = (float)Gdx.graphics.getHeight();
         (this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
         this.batch = new SpriteBatch();
-        this.background = new Sprite(new Texture("back.jpeg"));
+        this.background = new Sprite(new Texture("saved_gamed.png"));
         this.background.setSize(this.w,this.h);
         this.resume_button = new Sprite(new Texture("resume_game.png"));
         this.saved_button = new Sprite(new Texture("saved_button.png"));

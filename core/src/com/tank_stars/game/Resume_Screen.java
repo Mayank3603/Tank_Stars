@@ -47,7 +47,7 @@ public class Resume_Screen implements Screen, Serializable {
         this.h = (float)Gdx.graphics.getHeight();
         (this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
         this.batch = new SpriteBatch();
-        this.bg = new Sprite(new Texture("back.jpeg"));
+        this.bg = new Sprite(new Texture("saved_gamed.png"));
         this.bg.setSize(this.w,this.h);
 
         try {

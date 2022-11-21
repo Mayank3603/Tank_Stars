@@ -32,7 +32,7 @@ public class Main_Screen implements Screen ,Serializable {
         this.h = (float)Gdx.graphics.getHeight();
         (this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
         this.batch = new SpriteBatch();
-        this.main_menu_screen = new Sprite(new Texture("main_menu_screen.png"));
+        this.main_menu_screen = new Sprite(new Texture("starting_screen1.jpg"));
         this.play_button = new Sprite(new Texture("new_game_button.png"));
         this.resume_button = new Sprite(new Texture("resume_game.png"));
         this.exit_button = new Sprite(new Texture("exit_game.png"));
