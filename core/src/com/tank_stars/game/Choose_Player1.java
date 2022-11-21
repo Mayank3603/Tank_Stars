@@ -43,19 +43,29 @@ public class Choose_Player1 implements Screen {
         this.Mark_1_tank_image = new Sprite(new Texture("Mark_tank.jpg"));
         this.Helios_tank_image = new Sprite(new Texture("Helios_tank_.jpg"));
         this.background.setSize(this.w,this.h);
-        this.T_34_tank_image.setSize(this.w/6,this.h/12);
-        this.T_34_tank_image.setPosition(this.w/10,this.h/30);
-        this.Mark_1_tank_image.setSize(this.w/6,this.h/12);
-        this.Mark_1_tank_image.setPosition((this.w/10)+this.w/3,this.h/30);
-        this.Helios_tank_image.setSize(this.w/6,this.h/12);
-        this.Helios_tank_image.setPosition((this.w/10)+2*this.w/3,this.h/30);
+
+        this.Helios_tank_image.setSize(this.w/3-this.w/12,this.h/3);
+        this.Helios_tank_image.setPosition((this.w/12)-this.w/24,this.h/8);
+
+        this.T_34_tank_image.setSize(this.w/3-this.w/12,this.h/3);
+        this.T_34_tank_image.setPosition((this.w/12)+2*this.w/3-this.w/24,this.h/8);
+
+        this.Mark_1_tank_image.setSize(this.w/3-this.w/12,this.h/3);
+        this.Mark_1_tank_image.setPosition((this.w/12)+this.w/3-this.w/24,this.h/8);
+
+
+
         fontGenerator=new FreeTypeFontGenerator(Gdx.files.internal("yankclipper2.ttf"));
         fontParameter1=new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter1.size=60;
+        fontParameter1.size= (int) (this.w/20);
         fontParameter1.color= Color.BLACK;
+        fontParameter1.borderColor=Color.WHITE;
+        fontParameter1.borderWidth=(int)(this.w/240);
         font1=fontGenerator.generateFont(fontParameter1);
         fontParameter2=new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter2.size=30;
+        fontParameter2.borderColor=Color.WHITE;
+        fontParameter2.borderWidth=(int)(this.w/240);
+        fontParameter2.size=(int)(this.w/8);
         fontParameter2.color= Color.BLACK;
         font2=fontGenerator.generateFont(fontParameter2);
     }
@@ -75,8 +85,12 @@ public class Choose_Player1 implements Screen {
         this.Helios_tank_image.draw(batch);
         this.Mark_1_tank_image.draw(batch);
         this.T_34_tank_image.draw(batch);
-        font1.draw(batch,"PLAYER-1",7*this.w/20,4*this.h/5+this.h/20);
-        font2.draw(batch,"Choose a Tank",this.w/3+this.w/10,4*this.h/5-this.h/20);
+        font1.draw(batch,"PLAYER-1:",this.w/100,this.h-this.h/20);
+        font2.draw(batch,"CHOOSE A TANK:",this.w/3-this.w/24,4*this.h/5-this.h/20);
+
+        font1.draw(batch,"HELIOS TANK",(this.w/12)-this.w/48,this.h/10);
+        font1.draw(batch,"MARK TANK",(this.w/12)+this.w/3,this.h/10);
+        font1.draw(batch,"T_34 TANK",(this.w/12)+2*this.w/3,this.h/10);
         this.batch.end();
         inputhandle();
     }

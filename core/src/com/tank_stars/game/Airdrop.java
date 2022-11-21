@@ -1,5 +1,4 @@
 package com.tank_stars.game;
 
-public class Weapons {
-
+public class Airdrop {
 }

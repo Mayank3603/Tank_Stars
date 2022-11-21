@@ -10,6 +10,7 @@ public class Tank_Stars_Game extends Game {
 	public BitmapFont font;
 	private Tank tank_1;
 	private Tank tank_2;
+	private Weapons Airdrop;
 
 	public void create() {
 		batch = new SpriteBatch();
