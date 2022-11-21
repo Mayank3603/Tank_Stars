@@ -8,6 +8,8 @@ public class Tank_Stars_Game extends Game {
 
 	public SpriteBatch batch;
 	public BitmapFont font;
+	private Tank tank_1;
+	private Tank tank_2;
 
 	public void create() {
 		batch = new SpriteBatch();

@@ -1,5 +1,5 @@
 package com.tank_stars.game;
-interface Fireweapon{
+interface Fireweaponer {
     public void fire();
 }
 public class Weapons {

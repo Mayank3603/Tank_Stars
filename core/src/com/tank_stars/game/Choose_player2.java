@@ -15,6 +15,7 @@ public class Choose_player2 implements Screen {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Sprite main_menu_screen;
+
     public Choose_player2(final Tank_Stars_Game tank_stars_game) {
         this.tank_stars_game = tank_stars_game;
         this.w = (float) Gdx.graphics.getWidth();
