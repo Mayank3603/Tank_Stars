@@ -26,7 +26,16 @@ public class Main_Screen implements Screen{
         (this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
         this.batch = new SpriteBatch();
         this.main_menu_screen = new Sprite(new Texture("main_menu_screen.png"));
+        this.play_button = new Sprite(new Texture("new_game_button.png"));
+        this.resume_button = new Sprite(new Texture("resume_game.png"));
+        this.exit_button = new Sprite(new Texture("exit_game.png"));
         this.main_menu_screen.setSize(this.w,this.h);
+        this.play_button.setSize(150,50);
+        this.play_button.setPosition(this.w/10-50,this.h/40);
+        this.resume_button.setSize(150,50);
+        this.resume_button.setPosition(4*(this.w/10)-50,this.h/40);
+        this.exit_button.setSize(150,50);
+        this.exit_button.setPosition(7*(this.w/10)-50,this.h/40);
     }
 
 
@@ -43,6 +52,9 @@ public class Main_Screen implements Screen{
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
         this.main_menu_screen.draw(this.batch);
+        this.play_button.draw(this.batch);
+        this.resume_button.draw(this.batch);
+        this.exit_button.draw(this.batch);
         this.batch.end();
     }
 
