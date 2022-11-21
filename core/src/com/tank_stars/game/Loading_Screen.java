@@ -74,7 +74,7 @@ public class Loading_Screen implements Screen {
         batch.end();
         if (Gdx.input.isTouched()){
             tank_stars_game.setScreen(new Main_Screen(tank_stars_game));
-            dispose();
+//            dispose();
         }
     }
 
