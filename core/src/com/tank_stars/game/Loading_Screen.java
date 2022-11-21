@@ -41,7 +41,7 @@ public class Loading_Screen implements Screen {
         font1=fontGenerator.generateFont(fontParameter1);
 
         fontParameter2=new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter2.size=30;
+        fontParameter2.size=15;
         fontParameter2.color= Color.BLACK;
         font2=fontGenerator.generateFont(fontParameter2);
 
@@ -69,8 +69,8 @@ public class Loading_Screen implements Screen {
         batch.begin();
         starting_screen.draw(batch);
         loading_sign.draw(batch);
-        font1.draw(batch,"Welcome to Tank Stars",220,360);
-        font2.draw(batch,"Click Anywhere to start",240,330);
+        font1.draw(batch,"Welcome to Tank Stars",this.w/2-100,this.h/2+130);
+        font2.draw(batch,"Click Anywhere to start...",(this.w/2-100)+30,this.h/2+100);
         batch.end();
         if (Gdx.input.isTouched()){
             tank_stars_game.setScreen(new Main_Screen(tank_stars_game));
