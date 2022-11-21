@@ -12,15 +12,14 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import static java.lang.System.in;
 
-public class Resume_Screen implements Screen {
+public class Resume_Screen implements Screen, Serializable {
     final Tank_Stars_Game tank_stars_game;
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -32,6 +31,7 @@ public class Resume_Screen implements Screen {
     int i =0;
     FileReader in = null;
     FileReader total =null;
+    ObjectInputStream out = null;
     private FreeTypeFontGenerator fontGenerator;
     private List<BitmapFont> font;
     private BitmapFont font1;
@@ -83,23 +83,52 @@ public class Resume_Screen implements Screen {
 
     @Override
     public void render(float delta) {
-        float change_x = this.w;
-        float change_y = this.h;
         Gdx.gl.glClearColor(1.0f,1.0f,1.0f,1.0f);
         Gdx.gl.glClear(16384);
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
         this.bg.draw(batch);
-        for ( i =0 ;i < total_file;i++){
-            font.get(i).draw(batch,"sa",change_x/2,change_y-change_y/20);
-            change_y = change_y - (change_y/10+change_y/30);
-            this.postion_saved_game.set(change_x,change_y,0);
-            this.postion_saved.add(i,postion_saved_game);
+        try {
+            deserialize();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+        inputhandle();
         this.batch.end();
-
+        System.out.println("1");
     }
 
+public void deserialize() throws IOException,ClassNotFoundException{
+        float change_x = this.w;
+        float change_y = this.h;
+        try{
+            for ( i = 0 ;i < 1;i++){
+                this.out = new ObjectInputStream(new FileInputStream("Gamessaved"+(i+1)+".txt"));
+//                Game_Screen t1 = (Tank_Stars_Game) out.readObject();
+//                font.get(i).draw(batch,Integer.toString(t1.getTank_1().getHealth()),change_x/2,change_y-change_y/20);
+//                font.get(i).draw(batch,Integer.toString(t1.getTank_2().getHealth()),change_x/2,change_y-change_y/20);
+                change_y = change_y - (change_y/10+change_y/30);
+                this.postion_saved_game.set(change_x,change_y,0);
+                this.postion_saved.add(i,postion_saved_game);
+            }
+        }
+        finally {
+            if (out != null){
+                out.close();
+            }
+
+        }
+    }
+
+
+    public void inputhandle(){
+        if (Gdx.input.justTouched()){
+            tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
+        }
+
+    }
     @Override
     public void resize(int width, int height) {
 

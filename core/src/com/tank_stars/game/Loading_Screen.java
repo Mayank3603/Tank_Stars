@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-public class Loading_Screen implements Screen {
+import java.io.Serializable;
+
+public class Loading_Screen implements Screen  {
 
     final Tank_Stars_Game tank_stars_game;
     private OrthographicCamera camera;

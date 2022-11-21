@@ -1,15 +1,20 @@
 package com.tank_stars.game;
 
-import com.badlogic.gdx.InputProcessor;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tank implements Fireweaponer {
+public class Tank implements Fireweaponer , Serializable {
     private float pos_x;
     private float pos_y;
     private int Fuel;
-    private int Health;
+    private String type;
+
+    public int getHealth() {
+        return Health;
+    }
+
+    private int Health = 100;
     private float Angle;
     private float shoot_power;
     private List<Weapons> weapons ;

@@ -3,8 +3,11 @@ package com.tank_stars.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.bullet.collision._btMprSimplex_t;
 
-public class Tank_Stars_Game extends Game {
+import java.io.Serializable;
+
+public class Tank_Stars_Game extends Game  {
 
 	public SpriteBatch batch;
 	public BitmapFont font;

@@ -18,9 +18,7 @@ public class Game_Screen implements Screen {
 
     private Sprite pause_button;
 
-    private Sprite resume_button;
-    private Sprite saved_button;
-    private Sprite exit_button;
+
     private Sprite terror;
 
     private float w;
@@ -59,9 +57,9 @@ public class Game_Screen implements Screen {
             this.touchpos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             this.camera.unproject(touchpos);
             if (touchpos.x >= (this.w/2) && touchpos.x <= this.h-this.h/20+this.w/20 && touchpos.y >= this.h-this.h/20 && touchpos.y<=this.h-this.h/20+ this.h/20){
-                System.out.println("done");
+                System.out.println("1");
+                tank_stars_game.setScreen(new Pause_Screen(tank_stars_game,this));
             }
-
         }
     }
     public void throw_air_drop(){
