@@ -84,6 +84,7 @@ public class Choose_Player1 implements Screen {
         this.T_34_tank_image.draw(batch);
         font1.draw(batch,"PLAYER-1",7*this.w/20,4*this.h/5+this.h/20);
         font2.draw(batch,"Choose a Tank",this.w/3+this.w/10,4*this.h/5-this.h/20);
+
         this.batch.end();
     }
 
