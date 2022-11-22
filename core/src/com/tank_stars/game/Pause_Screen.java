@@ -2,16 +2,20 @@ package com.tank_stars.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.List;
 
 public class Pause_Screen implements Screen , Serializable {
 
@@ -27,6 +31,15 @@ public class Pause_Screen implements Screen , Serializable {
     private ObjectOutputStream out = null;
     private float w;
     private float h;
+
+    private FreeTypeFontGenerator fontGenerator;
+    private List<BitmapFont> font;
+    private BitmapFont font1;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter1;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2;
+
+    private BitmapFont font2;
+
     public Pause_Screen(final Tank_Stars_Game tank_stars_game,Game_Screen game_screen){
         this.tank_stars_game = tank_stars_game;
         this.game_screen = game_screen;
@@ -39,12 +52,28 @@ public class Pause_Screen implements Screen , Serializable {
         this.resume_button = new Sprite(new Texture("resume_game.png"));
         this.saved_button = new Sprite(new Texture("saved_button.png"));
         this.exit_button = new Sprite(new Texture("exit_game.png"));
+
+
         this.resume_button.setSize(this.w/6,this.h/12);
-        this.resume_button.setPosition(this.w/10,this.h/30);
+        this.resume_button.setPosition((this.w/10)+this.w/3,this.h/30+this.h/2+this.h/5);
         this.saved_button.setSize(this.w/6,this.h/12);
-        this.saved_button.setPosition((this.w/10)+this.w/3,this.h/30);
+        this.saved_button.setPosition((this.w/10)+this.w/3,this.h/30+this.h/2);
         this.exit_button.setSize(this.w/6,this.h/12);
-        this.exit_button.setPosition((this.w/10)+2*this.w/3,this.h/30);
+        this.exit_button.setPosition((this.w/10)+this.w/3,this.h/30+this.h/4);
+
+        fontGenerator=new FreeTypeFontGenerator(Gdx.files.internal("yankclipper2.ttf"));
+        fontParameter1=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter1.size= (int) (this.w/20);
+        fontParameter1.color= Color.BLACK;
+        fontParameter1.borderColor=Color.WHITE;
+        fontParameter1.borderWidth=(int)(this.w/240);
+        font1=fontGenerator.generateFont(fontParameter1);
+        fontParameter2=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter2.borderColor=Color.WHITE;
+        fontParameter2.borderWidth=(int)(this.w/240);
+        fontParameter2.size=(int)(this.w/8);
+        fontParameter2.color= Color.BLACK;
+        font2=fontGenerator.generateFont(fontParameter2);
     }
 
     @Override
@@ -62,6 +91,7 @@ public class Pause_Screen implements Screen , Serializable {
         this.resume_button.draw(this.batch);
         this.saved_button.draw(this.batch);
         this.exit_button.draw(this.batch);
+        font1.draw(batch,"PAUSED",(this.w/10)+this.w/3,this.h-this.h/20);
         batch.end();
         inputhandle();
     }
@@ -69,17 +99,17 @@ public class Pause_Screen implements Screen , Serializable {
         if (Gdx.input.justTouched()){
             this.touchpos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             this.camera.unproject(touchpos);
-            if (touchpos.x >= this.w/10 && touchpos.x <= this.h/30+this.w/6 && touchpos.y >= this.h/30 && touchpos.y<=this.h/30+ this.h/12){
+            if (touchpos.x >= (this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6 && touchpos.y >=this.h/30+this.h/2+this.h/5&& touchpos.y<=this.h/30+this.h/2+this.h/5+ this.h/12){
                 tank_stars_game.setScreen(this.game_screen);
             }
-            else if (touchpos.x >= (this.w/10)+this.w/3 && touchpos.x <= (this.w/10)+this.w/3+this.w/6&& touchpos.y >= this.h/30 && touchpos.y<=this.h/30+ this.h/12) {
+            else if (touchpos.x >=(this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6&& touchpos.y >= this.h/30+this.h/2 && touchpos.y<=this.h/30+this.h/2+ this.h/12) {
                 try {
                     serialize();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
-            else if (touchpos.x >= (this.w/10)+2*this.w/3 && touchpos.x <= (this.w/10)+2*this.w/3+this.w/6&& touchpos.y >= this.h/30 && touchpos.y<=this.h/30+ this.h/12) {
+            else if (touchpos.x >= (this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6&& touchpos.y >=this.h/30+this.h/4&& touchpos.y<=this.h/30+this.h/4+ this.h/12) {
                 Gdx.app.exit();
             }
         }

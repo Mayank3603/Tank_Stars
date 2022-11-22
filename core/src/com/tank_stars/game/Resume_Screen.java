@@ -38,6 +38,16 @@ public class Resume_Screen implements Screen, Serializable {
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter1;
     private Vector3 postion_saved_game = new Vector3();
     private  List<Vector3> postion_saved;
+    private Sprite resume_button;
+    private Sprite back_button;
+    private Sprite saved_button;
+    private Sprite exit_button;
+    private Vector3 touchpos = new Vector3();
+
+
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2;
+
+    private BitmapFont font2;
 
     public Resume_Screen(final  Tank_Stars_Game tank_stars_game) throws IOException {
         this.tank_stars_game = tank_stars_game;
@@ -49,7 +59,33 @@ public class Resume_Screen implements Screen, Serializable {
         this.batch = new SpriteBatch();
         this.bg = new Sprite(new Texture("saved_gamed.png"));
         this.bg.setSize(this.w,this.h);
+        this.resume_button = new Sprite(new Texture("new_game.png"));
+        this.saved_button = new Sprite(new Texture("new_game.png"));
+        this.exit_button = new Sprite(new Texture("new_game.png"));
+        this.back_button = new Sprite(new Texture("resume_game.png"));
 
+        this.resume_button.setSize(this.w/6,this.h/12);
+        this.resume_button.setPosition((this.w/10)+this.w/3,this.h/30+this.h/2+this.h/5);
+        this.saved_button.setSize(this.w/6,this.h/12);
+        this.saved_button.setPosition((this.w/10)+this.w/3,this.h/30+this.h/2);
+        this.exit_button.setSize(this.w/6,this.h/12);
+        this.exit_button.setPosition((this.w/10)+this.w/3,this.h/30+this.h/4);
+        this.back_button.setSize(this.w/6,this.h/12);
+        this.back_button.setPosition(this.w/100,this.h-this.h/10);
+
+        fontGenerator=new FreeTypeFontGenerator(Gdx.files.internal("yankclipper2.ttf"));
+        fontParameter1=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter1.size= (int) (this.w/20);
+        fontParameter1.color= Color.BLACK;
+        fontParameter1.borderColor=Color.WHITE;
+        fontParameter1.borderWidth=(int)(this.w/240);
+        font1=fontGenerator.generateFont(fontParameter1);
+        fontParameter2=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter2.borderColor=Color.WHITE;
+        fontParameter2.borderWidth=(int)(this.w/240);
+        fontParameter2.size=(int)(this.w/8);
+        fontParameter2.color= Color.BLACK;
+        font2=fontGenerator.generateFont(fontParameter2);
         try {
             total = new FileReader("Total_saved_game");
             int c;
@@ -87,7 +123,13 @@ public class Resume_Screen implements Screen, Serializable {
         Gdx.gl.glClear(16384);
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
+
         this.bg.draw(batch);
+        font1.draw(batch,"LOAD GAMES",(this.w/10)+this.w/3,this.h-this.h/20);
+        this.resume_button.draw(this.batch);
+        this.exit_button.draw(this.batch);
+        this.saved_button.draw(this.batch);
+        this.back_button.draw(this.batch);
         try {
             deserialize();
         } catch (IOException e) {
@@ -95,9 +137,10 @@ public class Resume_Screen implements Screen, Serializable {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        inputhandle();
+
         this.batch.end();
-        System.out.println("1");
+        inputhandle();
+
     }
 
 public void deserialize() throws IOException,ClassNotFoundException{
@@ -125,8 +168,22 @@ public void deserialize() throws IOException,ClassNotFoundException{
 
     public void inputhandle(){
         if (Gdx.input.justTouched()){
-            tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
+            this.touchpos.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            this.camera.unproject(touchpos);
+            if (touchpos.x >= (this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6 && touchpos.y >=this.h/30+this.h/2+this.h/5&& touchpos.y<=this.h/30+this.h/2+this.h/5+ this.h/12){
+                tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
+            }
+            else if (touchpos.x >=(this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6&& touchpos.y >= this.h/30+this.h/2 && touchpos.y<=this.h/30+this.h/2+ this.h/12) {
+                tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
+            }
+            else if (touchpos.x >= (this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6&& touchpos.y >=this.h/30+this.h/4&& touchpos.y<=this.h/30+this.h/4+ this.h/12) {
+                tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
+            } else if (touchpos.x >= this.w/100&& touchpos.x <= this.w/100+this.w/6&& touchpos.y >=this.h-this.h/10&& touchpos.y<=this.h-this.h/10+this.h/12) {
+                tank_stars_game.setScreen(new Main_Screen(tank_stars_game));
+
+            }
         }
+
 
     }
     @Override
