@@ -20,6 +20,14 @@ public class Game_Screen implements Screen {
     private Sprite background;
     private Sprite health_bar;
     private Sprite health_bar2;
+    private Sprite fire_button;
+    private  Sprite left_button;
+    private Sprite right_button;
+    private Sprite angle;
+    private Sprite fuel;
+    private Sprite tanks1;
+    private Sprite tanks2;
+
 
 
     private Sprite terror;
@@ -37,14 +45,36 @@ public class Game_Screen implements Screen {
         this.terror.setSize(this.w,this.h/2);
         this.background = new Sprite(new Texture("background.jpeg"));
         this.pause_button = new Sprite(new Texture("pause-button.jpg"));
-        this.health_bar = new Sprite(new Texture("health_bar.jpg"));
+        this.health_bar = new Sprite(new Texture("health_bar.png"));
+        this.health_bar2 = new Sprite(new Texture("health_bar2.png"));
+        this.fire_button =new Sprite(new Texture("fire_button.png"));
+        this.left_button = new Sprite(new Texture("left_button.png"));
+        this.right_button = new Sprite(new Texture("right_button.png"));
+        this.angle = new Sprite(new Texture("angle.png"));
+        this.fuel =  new Sprite(new Texture("fuel.png"));
+        this.tanks1 = new Sprite(new Texture("tank1.png"));
+        this.tanks2 = new Sprite(new Texture("tank2.png"));
         this.background.setSize(this.w,this.h);
-        this.health_bar.setSize(this.w/20,this.h/20);
-        this.health_bar.setPosition(this.w/2-this.w/4,this.h-this.h/20);
-
+        this.health_bar.setSize(this.w/20+(this.w/20)*2,this.h/20);
+        this.health_bar.setPosition(this.w/2-(this.w/16)*3,this.h-this.h/20);
+        this.health_bar2.setSize(this.w/20+(this.w/20)*2,this.h/20);
+        this.health_bar2.setPosition(this.w-(this.w/8)*4+3*(this.w/32),this.h-this.h/20);
         this.pause_button.setSize(this.w/20,this.h/20);
         this.pause_button.setPosition((this.w/2),this.h-this.h/20);
-
+        this.fire_button.setSize(this.w/16,this.h/8);
+        this.fire_button.setPosition((this.w/10)+this.w/3+4*(this.w/64),this.h/30);
+        this.left_button.setSize(this.w/16,this.h/8);
+        this.right_button.setSize(this.w/16,this.h/8);
+        this.right_button.setPosition(this.w/2-this.w/4,this.h/30);
+        this.left_button.setPosition(this.w/2+this.w/4,this.h/30);
+        this.fuel.setSize(this.w/16,this.h/8);
+        this.angle.setSize(this.w/6+this.w/24,this.h/6);
+        this.angle.setPosition(this.w/2-this.w/4+this.w/16,this.h/120);
+        this.fuel.setPosition(0,this.h/30);
+        this.tanks1.setSize(this.w/16,this.h/14);
+        this.tanks1.setPosition(this.w/8,this.h/4-this.h/64);
+        this.tanks2.setPosition(this.w-this.w/8,this.h/4+this.h/16+this.h/64);
+        this.tanks2.setSize(this.w/16,this.h/14);
     }
 
     @Override
@@ -62,7 +92,14 @@ public class Game_Screen implements Screen {
         this.terror.draw(this.batch);
         this.pause_button.draw(this.batch);
         this.health_bar.draw(this.batch);
-
+        this.health_bar2.draw(this.batch);
+        this.fire_button.draw(this.batch);
+        this.left_button.draw(this.batch);
+        this.right_button.draw(this.batch);
+        this.angle.draw(this.batch);
+        this.fuel.draw(this.batch);
+        this.tanks1.draw(this.batch);
+        this.tanks2.draw(this.batch);
         batch.end();
         inputhandle();
     }
