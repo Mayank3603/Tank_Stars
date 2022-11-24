@@ -18,6 +18,8 @@ public class Game_Screen implements Screen {
 
     private Sprite pause_button;
     private Sprite background;
+    private Sprite health_bar;
+    private Sprite health_bar2;
 
 
     private Sprite terror;
@@ -35,7 +37,11 @@ public class Game_Screen implements Screen {
         this.terror.setSize(this.w,this.h/2);
         this.background = new Sprite(new Texture("background.jpeg"));
         this.pause_button = new Sprite(new Texture("pause-button.jpg"));
+        this.health_bar = new Sprite(new Texture("health_bar.jpg"));
         this.background.setSize(this.w,this.h);
+        this.health_bar.setSize(this.w/20,this.h/20);
+        this.health_bar.setPosition(this.w/2-this.w/4,this.h-this.h/20);
+
         this.pause_button.setSize(this.w/20,this.h/20);
         this.pause_button.setPosition((this.w/2),this.h-this.h/20);
 
@@ -55,7 +61,7 @@ public class Game_Screen implements Screen {
         this.background.draw(this.batch);
         this.terror.draw(this.batch);
         this.pause_button.draw(this.batch);
-
+        this.health_bar.draw(this.batch);
 
         batch.end();
         inputhandle();

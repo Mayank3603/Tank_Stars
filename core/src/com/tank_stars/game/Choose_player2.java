@@ -24,6 +24,7 @@ public class Choose_player2 implements Screen {
     private Sprite Helios_tank_image;
     private Sprite Mark_1_tank_image;
     private Sprite T_34_tank_image;
+    private  Sprite back_button;
 
     private FreeTypeFontGenerator fontGenerator;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter1;
@@ -41,6 +42,7 @@ public class Choose_player2 implements Screen {
         this.T_34_tank_image = new Sprite(new Texture("t_34_tank.jpg"));
         this.Mark_1_tank_image = new Sprite(new Texture("Mark_tank.jpg"));
         this.Helios_tank_image = new Sprite(new Texture("Helios_tank_.jpg"));
+        this.back_button = new Sprite(new Texture("back_button.png"));
         this.background.setSize(this.w,this.h);
 
         this.Helios_tank_image.setSize(this.w/3-this.w/12,this.h/3);
@@ -51,6 +53,9 @@ public class Choose_player2 implements Screen {
 
         this.Mark_1_tank_image.setSize(this.w/3-this.w/12,this.h/3);
         this.Mark_1_tank_image.setPosition((this.w/12)+this.w/3-this.w/24,this.h/8);
+
+        this.back_button.setSize(this.w/6,this.h/12);
+        this.back_button.setPosition(this.w/2+this.w/4,this.h-this.h/10);
 
 
 
@@ -90,6 +95,8 @@ public class Choose_player2 implements Screen {
         font1.draw(batch,"HELIOS TANK",(this.w/12)-this.w/48,this.h/10);
         font1.draw(batch,"MARK TANK",(this.w/12)+this.w/3,this.h/10);
         font1.draw(batch,"T_34 TANK",(this.w/12)+2*this.w/3,this.h/10);
+        this.back_button.draw(this.batch);
+
         this.batch.end();
         this.inputhandle();
     }
@@ -113,6 +120,10 @@ public class Choose_player2 implements Screen {
 
                 tank_stars_game.setTank_1(new T_34_Tank());
                 tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
+
+            }
+            else if (touchpos.x >= this.w/2+this.w/4 && touchpos.x <= this.w/2+this.w/4+ this.w/6&& touchpos.y >= this.h-this.h/10 && touchpos.y<=this.h-this.h/10+this.h/12) {
+                tank_stars_game.setScreen(new Main_Screen(tank_stars_game));
 
             }
         }

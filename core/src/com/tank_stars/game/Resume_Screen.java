@@ -59,10 +59,10 @@ public class Resume_Screen implements Screen, Serializable {
         this.batch = new SpriteBatch();
         this.bg = new Sprite(new Texture("saved_gamed.png"));
         this.bg.setSize(this.w,this.h);
-        this.resume_button = new Sprite(new Texture("new_game.png"));
-        this.saved_button = new Sprite(new Texture("new_game.png"));
-        this.exit_button = new Sprite(new Texture("new_game.png"));
-        this.back_button = new Sprite(new Texture("resume_game.png"));
+        this.resume_button = new Sprite(new Texture("saved_game1.png"));
+        this.saved_button = new Sprite(new Texture("saved_game2.png"));
+        this.exit_button = new Sprite(new Texture("saved_game3.png"));
+        this.back_button = new Sprite(new Texture("back_button.png"));
 
         this.resume_button.setSize(this.w/6,this.h/12);
         this.resume_button.setPosition((this.w/10)+this.w/3,this.h/30+this.h/2+this.h/5);

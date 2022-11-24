@@ -43,7 +43,7 @@ public class Choose_Player1 implements Screen {
         this.T_34_tank_image = new Sprite(new Texture("t_34_tank.jpg"));
         this.Mark_1_tank_image = new Sprite(new Texture("Mark_tank.jpg"));
         this.Helios_tank_image = new Sprite(new Texture("Helios_tank_.jpg"));
-        this.back_button = new Sprite(new Texture("resume_game.png"));
+        this.back_button = new Sprite(new Texture("back_button.png"));
         this.background.setSize(this.w,this.h);
 
         this.Helios_tank_image.setSize(this.w/3-this.w/12,this.h/3);
