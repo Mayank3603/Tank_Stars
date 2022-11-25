@@ -39,9 +39,9 @@ public class Choose_player2 implements Screen {
         (this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
         this.batch = new SpriteBatch();
         this.background = new Sprite(new Texture("saved_gamed.png"));
-        this.T_34_tank_image = new Sprite(new Texture("t_34_tank.jpg"));
-        this.Mark_1_tank_image = new Sprite(new Texture("Mark_tank.jpg"));
-        this.Helios_tank_image = new Sprite(new Texture("Helios_tank_.jpg"));
+        this.T_34_tank_image = new Sprite(new Texture("t_34_tank.png"));
+        this.Mark_1_tank_image = new Sprite(new Texture("Mark_tank.png"));
+        this.Helios_tank_image = new Sprite(new Texture("Helios.png"));
         this.back_button = new Sprite(new Texture("back_button.png"));
         this.background.setSize(this.w,this.h);
 
