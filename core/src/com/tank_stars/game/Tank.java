@@ -52,6 +52,7 @@ public class Tank implements Fireweaponer , Serializable {
    public void choose_weapon(){
 
    }
+
    public void collect_air_drop(Airdrop a){
 
    }
