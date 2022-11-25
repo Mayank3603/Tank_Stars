@@ -167,7 +167,7 @@ public class Game_Screen implements Screen {
             this.touchpos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             this.camera.unproject(touchpos);
             if (touchpos.x >= (this.w/2) && touchpos.x <= this.h-this.h/20+this.w/20 && touchpos.y >= this.h-this.h/20 && touchpos.y<=this.h-this.h/20+ this.h/20){
-                System.out.println("1");
+
                 tank_stars_game.setScreen(new Pause_Screen(tank_stars_game,this));
             }
         }

@@ -83,7 +83,7 @@ public class Main_Screen implements Screen ,Serializable {
 
             }
             else if (touchpos.x >= (this.w/10)+2*this.w/3 && touchpos.x <= (this.w/10)+2*this.w/3+this.w/6&& touchpos.y >= this.h/30 && touchpos.y<=this.h/30+ this.h/12) {
-                System.out.println("exit game");
+
                 Gdx.app.exit();
             }
         }
