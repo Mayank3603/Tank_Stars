@@ -48,6 +48,7 @@ public class Pause_Screen implements Screen , Serializable {
         (this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
         this.batch = new SpriteBatch();
         System.out.println();
+        System.out.println();
         this.background = new Sprite(new Texture("saved_gamed.png"));
         this.background.setSize(this.w,this.h);
         this.resume_button = new Sprite(new Texture("resume_game.png"));
