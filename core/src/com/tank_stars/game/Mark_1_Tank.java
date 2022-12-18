@@ -12,6 +12,8 @@ public class Mark_1_Tank extends Tank{
     }
     @Override
     public void add_weapons(){
+        System.out.println("hooe;vjldkjvlajd");
+        System.out.println("adfbafb");
 
     }
     public String getType(){
