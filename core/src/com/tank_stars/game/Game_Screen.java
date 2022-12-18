@@ -195,7 +195,7 @@ public class Game_Screen implements Screen {
             }
             else{
 
-
+                System.out.println();
 
             }
         }
