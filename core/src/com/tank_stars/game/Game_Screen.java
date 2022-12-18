@@ -195,13 +195,13 @@ public class Game_Screen implements Screen {
             }
             else{
 
-                System.out.println();
+                System.out.println( );
 
             }
         }
     }
     public void throw_air_drop(){
-
+        System.out.println("22");
     }
 
     @Override
