@@ -3,13 +3,18 @@ package Scens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import jogamp.graph.font.typecast.ot.table.DirectoryEntry;
+
 import sun.jvm.hotspot.debugger.cdbg.basic.LazyBlockSym;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import javax.swing.text.TabableView;
@@ -39,6 +44,10 @@ public class Hud {
     Label tank2_fuel_label;
     Label fire_angle_label;
     Label power_label;
+    Pixmap pixmap1;
+    Pixmap pixmap2;
+    TextureRegionDrawable drawable;
+
 
 
 
@@ -47,6 +56,32 @@ public class Hud {
         this.tank2_fuel = 10;
         this.fire_angle = 70;
         this.power = 40;
+
+        this.pixmap1=new Pixmap(100,20, Pixmap.Format.RGBA8888);
+        pixmap1.setColor(Color.RED);
+        pixmap1.fill();
+
+        this.drawable=new TextureRegionDrawable(new TextureRegion(new Texture(pixmap1)));
+        pixmap1.dispose();
+        ProgressBar.ProgressBarStyle progressBarStyle= new ProgressBar.ProgressBarStyle();
+        progressBarStyle.background=drawable;
+
+
+        pixmap2 = new Pixmap(0, 20, Pixmap.Format.RGBA8888);
+        pixmap2.setColor(Color.GREEN);
+        pixmap2.fill();
+        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap2)));
+        pixmap2.dispose();
+
+        progressBarStyle.knob = drawable;
+
+        Pixmap pixmap = new Pixmap(100, 20, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.GREEN);
+        pixmap.fill();
+        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        pixmap.dispose();
+
+        progressBarStyle.knobBefore = drawable;
 
 
         this.w = (float) Gdx.graphics.getWidth();
@@ -63,7 +98,12 @@ public class Hud {
         power_label = new Label(String.format("%d",power),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         table.add(tank1_fuel_label).expandX().pad(0,-5*(this.w/6),this.h/11,0);
 
+        ProgressBar healthBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, progressBarStyle);
+        healthBar.setValue(1.0f);
+        healthBar.setAnimateDuration(0.25f);
+        healthBar.setBounds(10, 10, 100, 20);
 
+        stage.addActor(healthBar);
         table.add(tank2_fuel_label).expandX().pad(0,0,this.h/11,this.w/2-this.w/4-this.w/16);
 
 

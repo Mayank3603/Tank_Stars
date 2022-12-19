@@ -192,6 +192,7 @@ public class Game_Screen implements Screen {
 
         batch.end();
         this.hud.stage.draw();
+        this.hud.stage.act();
         inputhandle(delta);
 
     }
