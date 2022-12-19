@@ -52,8 +52,9 @@ public class Hud {
         table.bottom();
         table.setFillParent(true);
 
-        tank1_fuel_label = new Label(String.format("%d",tank1_fuel),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        table.add(tank1_fuel_label).expandX().pad(0,0,0,0);
+        tank1_fuel_label = new Label(String.format("%d",tank1_fuel),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        table.add(tank1_fuel_label).expandX().pad(0,-(float) Gdx.graphics.getWidth()/2-(float) Gdx.graphics.getWidth()/4-(float) Gdx.graphics.getWidth()/16,(float) Gdx.graphics.getHeight()/11,0);
+
         stage.addActor(this.table);
         };
 
