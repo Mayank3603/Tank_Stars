@@ -1,5 +1,6 @@
 package com.tank_stars.game;
 
+import Scens.Hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -53,6 +54,7 @@ public class Game_Screen implements Screen {
     private Sprite fuel_icon2;
     private float w;
     private float h;
+    private Hud hud;
 
     public Game_Screen(final Tank_Stars_Game tank_stars_game){
         this.tank_stars_game = tank_stars_game;
@@ -60,9 +62,9 @@ public class Game_Screen implements Screen {
         this.h = (float)Gdx.graphics.getHeight();
         (this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
         this.batch = new SpriteBatch();
-
+        hud = new Hud(this.batch);
         mapLoader=new TmxMapLoader();
-        map=mapLoader.load("best_terrain.tmx");
+        map=mapLoader.load("new_background_terrain.tmx");
         renderer=new OrthogonalTiledMapRenderer(map);
 
 
@@ -155,7 +157,8 @@ public class Game_Screen implements Screen {
         update(delta);
         Gdx.gl.glClearColor(1.0f,1.0f,1.0f,1.0f);
         Gdx.gl.glClear(16384);
-        batch.setProjectionMatrix(this.camera.combined);
+        batch.setProjectionMatrix(this.hud.stage.getCamera().combined);
+//        this.batch.setProjectionMatrix(this.hud.stage.getCamera().combined);
 
 
         batch.begin();
@@ -183,7 +186,10 @@ public class Game_Screen implements Screen {
         this.fuel_icon2.draw(this.batch);
         font1.draw(batch,"PLAYER-1",this.w/100,this.h-this.h/20);
         font2.draw(batch,"PLAYER-2",this.w/2+this.w/4+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100,this.h-this.h/20);
+
         batch.end();
+        this.hud.stage.draw();
+
         inputhandle(delta);
 
     }
