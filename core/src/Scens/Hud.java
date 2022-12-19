@@ -20,6 +20,15 @@ public class Hud {
     public Stage stage;
     private Viewport viewport;
     private int tank1_fuel;
+
+    public int getTank1_fuel() {
+        return tank1_fuel;
+    }
+
+    public void setTank1_fuel(int tank1_fuel) {
+        this.tank1_fuel = tank1_fuel;
+    }
+
     private int tank2_fuel;
     private float fire_angle;
     private int power;

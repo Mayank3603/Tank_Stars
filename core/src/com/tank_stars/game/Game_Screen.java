@@ -150,6 +150,7 @@ public class Game_Screen implements Screen {
     public void update(float dt){
         inputhandle(dt);
         this.camera.update();
+
         renderer.setView(this.camera);
     }
     @Override
@@ -187,9 +188,9 @@ public class Game_Screen implements Screen {
         font1.draw(batch,"PLAYER-1",this.w/100,this.h-this.h/20);
         font2.draw(batch,"PLAYER-2",this.w/2+this.w/4+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100,this.h-this.h/20);
 
+
         batch.end();
         this.hud.stage.draw();
-
         inputhandle(delta);
 
     }
@@ -203,7 +204,9 @@ public class Game_Screen implements Screen {
                 tank_stars_game.setScreen(new Pause_Screen(tank_stars_game,this));
             }
             else{
-
+                this.hud.setTank1_fuel(12);
+                System.out.println(this.hud.getTank1_fuel());
+                this.hud.stage.draw();
 //               this.camera.position.x += 100*dt;
 
             }
