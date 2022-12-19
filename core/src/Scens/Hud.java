@@ -43,8 +43,8 @@ public class Hud {
 
 
     public Hud(SpriteBatch sb){
-        this.tank1_fuel = 19;
-        this.tank2_fuel = 10;
+        this.tank1_fuel = 4;
+        this.tank2_fuel = 4;
         this.fire_angle = 70;
         this.power = 40;
 
@@ -59,21 +59,27 @@ public class Hud {
 
         tank1_fuel_label = new Label(String.format("%d",tank1_fuel),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         tank2_fuel_label = new Label(String.format("%d",tank2_fuel),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-        fire_angle_label = new Label(String.format("%f",fire_angle),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        fire_angle_label = new Label(String.format("%3f",fire_angle),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         power_label = new Label(String.format("%d",power),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-        table.add(tank1_fuel_label).expandX().pad(0,-5*(this.w/6),this.h/11,0);
+
+        table.add(tank1_fuel_label).expandX().padTop(10);
+//        table.add(tank2_fuel_label).expandX().padTop(10);
+//        table.add(fire_angle_label).expandX().padTop(10);
+//        table.add(power_label).expandX().padTop(10);
+//        table.row();
+        table.add(tank1_fuel_label).expandX().pad(0,-this.w/2-this.w/4-this.w/16,this.h/11,0);
 
 
-        table.add(tank2_fuel_label).expandX().pad(0,0,this.h/11,this.w/2-this.w/4-this.w/16);
+        table.add(tank2_fuel_label).expandX().pad(0,0,this.h/11,this.w/2);
 
 
-        table.add(fire_angle_label).expandX().pad(0,-this.w/2-this.w/4-this.w/16,this.h/11,0);
-
-
-
-
-
-        table.add(power_label).expandX().pad(0,-this.w/2-this.w/4-this.w/16,this.h/11,0);
+        table.add(fire_angle_label).expandX().pad(0,-this.w/2-this.w/4-3*(this.w/16),this.h/11,0);
+//
+//
+//
+//
+//
+//        table.add(power_label).expandX().pad(0,-this.w/2-this.w/4-this.w/16,this.h/11,this.w/2+this.w/4+this.w/16);
         stage.addActor(this.table);
         };
 
