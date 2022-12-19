@@ -161,8 +161,11 @@ public class Game_Screen implements Screen {
         batch.begin();
 
         this.background.draw(this.batch);
+
 //        this.terror.draw(this.batch);
         this.pause_button.draw(this.batch);
+        renderer.render();
+
         this.health_bar.draw(this.batch);
         this.health_bar2.draw(this.batch);
         this.fire_button.draw(this.batch);
@@ -180,7 +183,6 @@ public class Game_Screen implements Screen {
         this.fuel_icon2.draw(this.batch);
         font1.draw(batch,"PLAYER-1",this.w/100,this.h-this.h/20);
         font2.draw(batch,"PLAYER-2",this.w/2+this.w/4+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100,this.h-this.h/20);
-        renderer.render();
         batch.end();
         inputhandle(delta);
 
