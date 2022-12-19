@@ -46,6 +46,8 @@ public class Hud {
         this.fire_angle = 70;
         this.power = 40;
 
+
+
         this.viewport = new FitViewport((float) Gdx.graphics.getWidth(),(float)Gdx.graphics.getHeight(),new OrthographicCamera());
         stage = new Stage(viewport ,sb);
         table  = new Table();
