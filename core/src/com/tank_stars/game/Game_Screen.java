@@ -157,8 +157,9 @@ public class Game_Screen implements Screen {
         Gdx.gl.glClear(16384);
         batch.setProjectionMatrix(this.camera.combined);
 
+
         batch.begin();
-        renderer.render();
+
         this.background.draw(this.batch);
 //        this.terror.draw(this.batch);
         this.pause_button.draw(this.batch);
@@ -179,7 +180,7 @@ public class Game_Screen implements Screen {
         this.fuel_icon2.draw(this.batch);
         font1.draw(batch,"PLAYER-1",this.w/100,this.h-this.h/20);
         font2.draw(batch,"PLAYER-2",this.w/2+this.w/4+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100,this.h-this.h/20);
-
+        renderer.render();
         batch.end();
         inputhandle(delta);
 
@@ -195,7 +196,7 @@ public class Game_Screen implements Screen {
             }
             else{
 
-                System.out.println( );
+//               this.camera.position.x += 100*dt;
 
             }
         }
