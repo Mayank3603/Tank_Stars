@@ -12,6 +12,7 @@ public class Tank_Stars_Game extends Game  {
 	public SpriteBatch batch;
 	public BitmapFont font;
 
+
 	public void setTank_1(Tank tank_1) {
 		this.tank_1 = tank_1;
 	}
