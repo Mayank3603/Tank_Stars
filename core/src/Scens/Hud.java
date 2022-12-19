@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
+import jogamp.graph.font.typecast.ot.table.DirectoryEntry;
 import sun.jvm.hotspot.debugger.cdbg.basic.LazyBlockSym;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import javax.swing.text.TabableView;
@@ -59,12 +59,21 @@ public class Hud {
 
         tank1_fuel_label = new Label(String.format("%d",tank1_fuel),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         tank2_fuel_label = new Label(String.format("%d",tank2_fuel),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-        fire_angle_label = new Label(String.format("%d",fire_angle),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        fire_angle_label = new Label(String.format("%f",fire_angle),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         power_label = new Label(String.format("%d",power),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
-        table.add(tank1_fuel_label).expandX().pad(0,-this.w/2-this.w/4-this.w/16,this.h/11,0);
-//        table.add(tank2_fuel_label).expandX().pad(0,0,this.h/11,this.w/2-this.w/4-this.w/16);
-//        table.add(fire_angle_label).expandX().pad(0,-this.w/2-this.w/4-this.w/16,this.h/11,0);
-//        table.add(power_label).expandX().pad(0,-this.w/2-this.w/4-this.w/16,this.h/11,0);
+        table.add(tank1_fuel_label).expandX().pad(0,-5*(this.w/6),this.h/11,0);
+
+
+        table.add(tank2_fuel_label).expandX().pad(0,0,this.h/11,this.w/2-this.w/4-this.w/16);
+
+
+        table.add(fire_angle_label).expandX().pad(0,-this.w/2-this.w/4-this.w/16,this.h/11,0);
+
+
+
+
+
+        table.add(power_label).expandX().pad(0,-this.w/2-this.w/4-this.w/16,this.h/11,0);
         stage.addActor(this.table);
         };
 
