@@ -12,8 +12,19 @@ public class Mark_1_Tank extends Tank{
     }
     @Override
     public void add_weapons(){
-        System.out.println("hooe;vjldkjvlajd");
-        System.out.println("adfbafb");
+        Weapons weapon;
+        weapon = Weapons.getInstance(25,"Red");
+        this.weapons_1.add(weapon);
+        weapon = Weapons.getInstance(25,"Red");
+        this.weapons_1.add(weapon);
+        weapon = Weapons.getInstance(25,"Red");
+        this.weapons_1.add(weapon);
+        weapon = Weapons.getInstance(100,"Brown");
+        this.weapons_1.add(weapon);
+        weapon = Weapons.getInstance(100,"Brwon");
+        this.weapons_1.add(weapon);
+        weapon = Weapons.getInstance(100,"Brwon");
+        this.weapons_1.add(weapon);
 
     }
     public String getType(){

@@ -37,8 +37,14 @@ public class Tank implements Fireweaponer , Serializable {
 
     }
     public  void add_weapons(){
+        for (int i=0;i<6;i++){
+            weapon = Weapons.getInstance(25,"Red");
+            this.weapons.add(weapon);
+        }
 
-//        weapon = new Weapons(21,"red");
+
+
+
         weapons.add(weapon);
 
         }
