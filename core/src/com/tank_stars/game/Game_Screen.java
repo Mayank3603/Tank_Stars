@@ -136,6 +136,7 @@ public class Game_Screen implements Screen {
         this.power.setSize(this.w/6+this.w/24,this.h/6);
         this.power.setPosition(this.w/2-this.w/4+this.w/16+this.w/4-this.w/32,this.h/120);
 
+
         this.tanks1.setSize(this.w/16,this.h/14);
         this.tanks1.setPosition(this.w/8,this.h/4-this.h/64);
         this.tanks2.setPosition(this.w-this.w/8,this.h/4+this.h/16+this.h/64);
