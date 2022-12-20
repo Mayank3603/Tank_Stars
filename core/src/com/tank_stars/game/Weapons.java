@@ -20,5 +20,11 @@ public class Weapons {
 
     }
 
+    public int getDamage(){
+        return this.damage;
+    }
+    public String getColour(){
+        return  this.colour;
+    }
 
 }

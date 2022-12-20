@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tank implements Fireweaponer , Serializable {
+public abstract class Tank implements Fireweaponer , Serializable {
     private float pos_x;
     private float pos_y;
     private int Fuel;
@@ -21,6 +21,7 @@ public class Tank implements Fireweaponer , Serializable {
     private  Weapons weapon;
     public String name ;
     private int weapons_quantity;
+    private int no_of_moves=5;
     public void setFuel(int fuel) {
         Fuel = fuel;
     }
@@ -29,36 +30,47 @@ public class Tank implements Fireweaponer , Serializable {
         Health = health;
     }
 
+    public abstract void getweapon();
+
 
 
     public Tank(){
         this.weapons = new ArrayList<Weapons>();
-        add_weapons();
+        this.add_weapons();
 
     }
-    public  void add_weapons(){
-        for (int i=0;i<6;i++){
-            weapon = Weapons.getInstance(25,"Red");
-            this.weapons.add(weapon);
-        }
-
-
-
-
-        weapons.add(weapon);
-
-        }
+    public abstract void add_weapons();
 
 
     public void leftmove(){
-
+        this.no_of_moves-=1;
     }
     public void rightmove(){
+        this.no_of_moves-=1;
+    }
+    public void make_move(String choice){
+        if(choice=="left"){
+            this.leftmove();
+        }
+        else{
+            this.rightmove();
+        }
+    }
+    public void set_projectile(){
 
     }
-   public void choose_weapon(){
+    public void setShoot_power(){
 
-   }
+    }
+    public final void Steps_to_follow(String choice){
+        make_move(choice);
+        set_projectile();
+        setShoot_power();
+        getweapon();
+        fire();
+
+    }
+
 
    public void collect_air_drop(Airdrop a){
 
