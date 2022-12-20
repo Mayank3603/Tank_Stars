@@ -37,6 +37,7 @@ public class Game_Screen implements Screen {
     private SpriteBatch batch;
     private TmxMapLoader mapLoader;
     private TiledMap map;
+
     private OrthogonalTiledMapRenderer renderer;
 
     private Sprite pause_button;
@@ -58,8 +59,8 @@ public class Game_Screen implements Screen {
     private FreeTypeFontGenerator fontGenerator;
 
     int odd ;
-    int fuel_1 = 100;
-    int fuel_2 =100;
+    int fuel_1 = 1000;
+    int fuel_2 =1000;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter1;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2;
 
@@ -73,12 +74,14 @@ public class Game_Screen implements Screen {
     private Sprite fuel_icon2;
 
     private World world;
+    int shooting = 0;
     int flag = 1;
     private World doing_world;
     private Body player;
     private Body player_tank;
     private Body player_tank2;
     private  Body airdrop;
+    private  Body shoot_flag;
 
     private Box2DDebugRenderer b2dr;
     private float w;
@@ -271,16 +274,21 @@ public class Game_Screen implements Screen {
         this.power.draw(this.batch);
         this.fuel_icon.draw(this.batch);
         this.fuel_icon2.draw(this.batch);
-        if ((fuel_1  == 500 || fuel_2 == 500) && flag == 1){
-            airdrop = createPlayer(this.w/2,this.h,50,40,false);
-            flag = 1;
-        }
-        if (flag == 1){
 
-        }
         font2.draw(batch,"PLAYER-2",this.w/2+this.w/4+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100,this.h-this.h/20);
         font1.draw(batch,"PLAYER-1",this.w/100,this.h-this.h/20);
         batch.end();
+        if ((fuel_1  == 995 || fuel_2 == 995) && flag == 1){
+            System.out.println("11");
+            airdrop = createPlayer((player_tank.getPosition().x+player_tank2.getPosition().x)/2,this.h,40,40,false);
+            flag = 0;
+        }
+        if (flag == 0){
+            throw_air_drop();
+            this.batch.begin();
+            air_drop.draw(this.batch);
+            this.batch.end();
+        }
         b2dr.render(this.doing_world,this.camera.combined);
         this.hud.stage.draw();
         this.hud.stage.act();
@@ -318,6 +326,8 @@ public class Game_Screen implements Screen {
                 return;
             }
             player_tank.setLinearVelocity(-7500000,player_tank.getLinearVelocity().y);
+            System.out.println("fuel_1");
+            System.out.println(fuel_1);
             fuel_1  -= 1;
 
         } else if (this.odd == 0) {
@@ -325,7 +335,6 @@ public class Game_Screen implements Screen {
                 return;
             }
             player_tank2.setLinearVelocity(-7500000,player_tank2.getLinearVelocity().y);
-
             fuel_2 -= 1;
         }
     }
@@ -336,6 +345,8 @@ public class Game_Screen implements Screen {
                 return;
             }
             player_tank.setLinearVelocity(7500000,player_tank.getLinearVelocity().y);
+            System.out.println("fuel_1");
+            System.out.println(fuel_1);
             fuel_1 -= 1;
 
         } else if (this.odd == 0) {
@@ -351,16 +362,18 @@ public class Game_Screen implements Screen {
     public void shoot(){
 
         if(odd == 0){
-//            shot_flag = 0;
+            shooting = 0;
             this.odd = 1;
         }
         else if(odd == 1){
-//            shoot_flag = 1;
+             shooting= 1;
             this.odd= 0;
         }
     }
     public  void throw_air_drop(){
-        air_drop =
+        this.air_drop = new Sprite(new Texture("Airdrop_in_game.jpg"));
+        this.air_drop.setSize(80,80);
+        this.air_drop.setPosition(airdrop.getPosition().x-this.w/24+this.w/96,airdrop.getPosition().y-this.h/18-this.h/80);
     }
 
     @Override
