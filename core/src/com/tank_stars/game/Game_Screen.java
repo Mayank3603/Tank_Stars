@@ -121,6 +121,9 @@ public class Game_Screen implements Screen {
         fontParameter1.size= (int) (this.w/20);
         fontParameter1.color= Color.BLACK;
         fontParameter1.borderColor=Color.WHITE;
+
+
+
         fontParameter1.borderWidth=(int)(this.w/240);
         font1=fontGenerator.generateFont(fontParameter1);
         fontParameter2=new FreeTypeFontGenerator.FreeTypeFontParameter();
