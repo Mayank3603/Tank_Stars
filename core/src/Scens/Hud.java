@@ -46,42 +46,41 @@ public class Hud {
     Label power_label;
     Pixmap pixmap1;
     Pixmap pixmap2;
-    TextureRegionDrawable drawable;
+    TextureRegionDrawable drawable1;
 
+    Pixmap pixmap3;
+    Pixmap pixmap4;
 
+    TextureRegionDrawable drawable2;
 
 
     public Hud(SpriteBatch sb){
-        this.tank1_fuel = 19;
-        this.tank2_fuel = 10;
+        this.tank1_fuel = 4;
+        this.tank2_fuel = 4;
         this.fire_angle = 70;
         this.power = 40;
 
-        this.pixmap1=new Pixmap(400,200, Pixmap.Format.RGBA8888);
+        this.pixmap1=new Pixmap(100,20, Pixmap.Format.RGBA8888);
         pixmap1.setColor(Color.RED);
         pixmap1.fill();
 
-        this.drawable=new TextureRegionDrawable(new TextureRegion(new Texture(pixmap1)));
+        this.drawable1=new TextureRegionDrawable(new TextureRegion(new Texture(pixmap1)));
         pixmap1.dispose();
         ProgressBar.ProgressBarStyle progressBarStyle= new ProgressBar.ProgressBarStyle();
-        progressBarStyle.background=drawable;
-
+        progressBarStyle.background=drawable1;
 
         pixmap2 = new Pixmap(0, 20, Pixmap.Format.RGBA8888);
         pixmap2.setColor(Color.GREEN);
         pixmap2.fill();
-        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap2)));
+        drawable1 = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap2)));
         pixmap2.dispose();
-
-        progressBarStyle.knob = drawable;
-
+        progressBarStyle.knob = drawable1;
         Pixmap pixmap = new Pixmap(100, 20, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.GREEN);
         pixmap.fill();
-        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        drawable1 = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
         pixmap.dispose();
-
-        progressBarStyle.knob = drawable;
+        progressBarStyle.knob = drawable1;
 
 
         this.w = (float) Gdx.graphics.getWidth();
@@ -98,12 +97,17 @@ public class Hud {
         power_label = new Label(String.format("%d",power),new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         table.add(tank1_fuel_label).expandX().pad(0,-5*(this.w/6),this.h/11,0);
 
-        ProgressBar healthBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, progressBarStyle);
-        healthBar.setValue(1.0f);
-        healthBar.setAnimateDuration(0.25f);
-        healthBar.setBounds(10, 10, 100, 20);
+        ProgressBar healthBar1 = new ProgressBar(0.0f, 1.0f, 0.01f, false, progressBarStyle);
+        healthBar1.setValue(1.0f);
+        healthBar1.setAnimateDuration(0.25f);
+        healthBar1.setBounds(this.w/2-this.w/12, this.h-this.h/12 +this.h/24, 100, 20);
 
-        stage.addActor(healthBar);
+        ProgressBar healthBar2 = new ProgressBar(0.0f, 1.0f, 0.01f, false, progressBarStyle);
+        healthBar2.setValue(1.0f);
+        healthBar2.setAnimateDuration(0.25f);
+        healthBar2.setBounds(this.w/2+this.w/12, this.h-this.h/12 +this.h/24, 100, 20);
+
+        stage.addActor(healthBar1);
         table.add(tank2_fuel_label).expandX().pad(0,0,this.h/11,this.w/2-this.w/4-this.w/16);
 
 

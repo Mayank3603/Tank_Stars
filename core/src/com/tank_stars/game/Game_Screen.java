@@ -82,8 +82,8 @@ public class Game_Screen implements Screen {
 //        this.terror.setSize(this.w,this.h/2);
         this.background = new Sprite(new Texture("background.jpeg"));
         this.pause_button = new Sprite(new Texture("pause-button.jpg"));
-        this.health_bar = new Sprite(new Texture("health_bar.png"));
-        this.health_bar2 = new Sprite(new Texture("health_bar2.png"));
+//        this.health_bar = new Sprite(new Texture("health_bar.png"));
+//        this.health_bar2 = new Sprite(new Texture("health_bar2.png"));
         this.fire_button =new Sprite(new Texture("fire_button.png"));
         this.left_button = new Sprite(new Texture("left_button.png"));
         this.right_button = new Sprite(new Texture("right_button.png"));
@@ -114,10 +114,10 @@ public class Game_Screen implements Screen {
         fontParameter2.color= Color.BLACK;
         font2=fontGenerator.generateFont(fontParameter2);
         this.background.setSize(this.w,this.h);
-        this.health_bar.setSize(this.w/20+(this.w/20)*2,this.h/20);
-        this.health_bar.setPosition(this.w/2-(this.w/16)*3,this.h-this.h/20);
-        this.health_bar2.setSize(this.w/20+(this.w/20)*2,this.h/20);
-        this.health_bar2.setPosition(this.w-(this.w/8)*4+3*(this.w/32),this.h-this.h/20);
+//        this.health_bar.setSize(this.w/20+(this.w/20)*2,this.h/20);
+//        this.health_bar.setPosition(this.w/2-(this.w/16)*3,this.h-this.h/20);
+//        this.health_bar2.setSize(this.w/20+(this.w/20)*2,this.h/20);
+//        this.health_bar2.setPosition(this.w-(this.w/8)*4+3*(this.w/32),this.h-this.h/20);
         this.pause_button.setSize(this.w/20,this.h/20);
         this.pause_button.setPosition((this.w/2),this.h-this.h/20);
         this.fire_button.setSize(this.w/16,this.h/8);
@@ -197,8 +197,8 @@ public class Game_Screen implements Screen {
         this.pause_button.draw(this.batch);
         renderer.render();
 
-        this.health_bar.draw(this.batch);
-        this.health_bar2.draw(this.batch);
+//        this.health_bar.draw(this.batch);
+//        this.health_bar2.draw(this.batch);
         this.fire_button.draw(this.batch);
         this.left_button.draw(this.batch);
         this.right_button.draw(this.batch);
