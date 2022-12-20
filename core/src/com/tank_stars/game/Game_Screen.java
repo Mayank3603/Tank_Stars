@@ -44,6 +44,7 @@ public class Game_Screen implements Screen {
     private Sprite background;
     private Sprite health_bar;
     private Sprite health_bar2;
+    private Sprite missile;
     private Sprite fire_button;
     private  Sprite left_button;
     private Sprite right_button;
@@ -72,9 +73,10 @@ public class Game_Screen implements Screen {
     private Sprite right_button2;
     private Sprite fuel_icon;
     private Sprite fuel_icon2;
+    private Sprite shooting_body;
 
     private World world;
-    int shooting = 0;
+    int shooting = -5;
     int flag = 1;
     private World doing_world;
     private Body player;
@@ -171,7 +173,7 @@ public class Game_Screen implements Screen {
         this.angle.setPosition(this.w/2-this.w/4+this.w/16-this.w/32,this.h/120);
         this.power.setSize(this.w/6+this.w/24,this.h/6);
         this.power.setPosition(this.w/2-this.w/4+this.w/16+this.w/4-this.w/32,this.h/120);
-        doing_world = new World(new Vector2(0,-9.8f),false);
+        doing_world = new World(new Vector2(0,-25f),false);
         b2dr = new Box2DDebugRenderer();
         player = createPlayer(100,110,this.w,this.h/12+this.h/12+this.h/60+this.h/30,true);
         player_tank = createPlayer(this.w/4,this.h/2,50,50,false);
@@ -226,7 +228,7 @@ public class Game_Screen implements Screen {
         pBody = doing_world.createBody(def);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width,height);
-        pBody.createFixture(shape,1.0f);
+        pBody.createFixture(shape,10.0f);
         shape.dispose();
         return  pBody;
     }
@@ -289,6 +291,18 @@ public class Game_Screen implements Screen {
             air_drop.draw(this.batch);
             this.batch.end();
         }
+        if(shooting == 0){
+//            for(int i=0; i<projectile.getFixtureList().size;i++){
+//                projectile.getFixtureList().get(i).setSensor(true);
+//            }
+            System.out.println("1");
+            shoot_flag = createPlayer((int)player_tank.getPosition().x +this.w/24+this.w/24, this.h/2,5,5,false);
+            shoot_flag.applyLinearImpulse( 10,10,101,100,true);//            bomb_flag = 0;
+            shooting = -1;
+        }
+        if (shooting == 1){
+
+        }
         b2dr.render(this.doing_world,this.camera.combined);
         this.hud.stage.draw();
         this.hud.stage.act();
@@ -315,7 +329,7 @@ public class Game_Screen implements Screen {
      if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             moving_right();
         }
-    if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+    if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
         shoot();
         }
     }
@@ -362,11 +376,11 @@ public class Game_Screen implements Screen {
     public void shoot(){
 
         if(odd == 0){
-            shooting = 0;
+            this.shooting = 0;
             this.odd = 1;
         }
         else if(odd == 1){
-             shooting= 1;
+             this.shooting= 1;
             this.odd= 0;
         }
     }
