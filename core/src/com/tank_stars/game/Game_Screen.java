@@ -49,6 +49,8 @@ public class Game_Screen implements Screen {
     private Sprite fuel1;
     private Sprite tanks1;
     private Sprite tanks2;
+    int i = 0;
+    int j =0;
     private BitmapFont font1;
     private FreeTypeFontGenerator fontGenerator;
     int player_1_horizontalforce =0;
@@ -300,93 +302,88 @@ public class Game_Screen implements Screen {
 //            }
 
         else {
-           if(this.odd == 1 && this.even == 0){
+           if(this.odd == 1 ){
                 moving_player_1();
+               System.out.println(("gone"));
             }
-            else if (this.odd == 0 && this.even == 1){
+            else if (this.odd == 0 ){
                 moving_player_2();
+               System.out.println("gone 3");
             }
-
-
         }
     }
     public void  moving_player_1(){
 
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-//               player 2 left button
-//                    System.out.println("1");
                 this.odd = 0;
-                this.even = 1;
+
                 System.out.println("not came name");
-                player_tank2.setLinearVelocity(-700000000,player_tank2.getLinearVelocity().y);
-                int i = 0;
-                while (i < 900000000){
-                    int j =0 ;
-                    while ( j < 900000000)
-                        j++;
-                    i++;
-                }
+                player_tank.setLinearVelocity(-700000000,player_tank.getLinearVelocity().y);
+//                int i = 0;
+//                while (i < 900000000){
+//                    int j =0 ;
+//                    while ( j < 900000000)
+//                        j++;
+//                    i++;
+//                }
                 this.fuel_1 -= 1;
             }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                //               player 2 right button
-//                    System.out.println("1");
+            else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+
 
                 this.odd = 0;
-                this.even = 1;
+
                 System.out.println("not came name");
                 player_tank.setLinearVelocity(700000000,player_tank.getLinearVelocity().y);
-                int i = 0;
-                while (i < 900000000){
-                    int j =0 ;
-                    while ( j < 900000000)
-                        j++;
-                    i++;
-                }
+//                int i = 0;
+//                while (i < 900000000){
+//                    int j =0 ;
+//                    while ( j < 900000000)
+//                        j++;
+//                    i++;
+//                }
                 this.fuel_1 -= 1;
             }
 
     }
     public  void moving_player_2(){
 
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+    if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 //               player 2 left button
 //                    System.out.println("1");
 
-                this.odd = 1;
-                this.even = 0;
-                System.out.println("not came name");
-                player_tank2.setLinearVelocity(-700000000,player_tank2.getLinearVelocity().y);
-                int i = 0;
-                while (i < 900000000){
-                    int j =0 ;
-                    while ( j < 900000000)
-                        j++;
-                    i++;
-                }
-                this.fuel_2 -= 1;
-            }
+        this.odd = 1;
 
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                //               player 2 right button
+        System.out.println("not came name");
+        player_tank2.setLinearVelocity(-700000000,player_tank2.getLinearVelocity().y);
+//        int i = 0;
+//        while (i < 900000000){
+//            int j =0 ;
+//            while ( j < 900000000)
+//                j++;
+//            i++;
+//        }
+        this.fuel_2 -= 1;
+    }
+
+   else  if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+        //               player 2 right button
 //                    System.out.println("1");
 
-                this.odd = 1;
-                this.even = 0;
-                System.out.println("not came name");
-                player_tank2.setLinearVelocity(700000000,player_tank2.getLinearVelocity().y);
-                int i = 0;
-                while (i < 900000000){
-                    int j =0 ;
-                    while ( j < 900000000)
-                        j++;
-                    i++;
-                }
-                this.fuel_2 -= 1;
-            }
-        }
+        this.odd = 1;
 
+        player_tank2.setLinearVelocity(700000000,player_tank2.getLinearVelocity().y);
+//
+//        while (i < 900000000){
+//            int j =0 ;
+//            while ( j < 900000000)
+//                j++;
+//            i++;
+//        }
+        this.fuel_2 -= 1;
+    }
+    }
 
     public void throw_air_drop(){
         System.out.println("22");
