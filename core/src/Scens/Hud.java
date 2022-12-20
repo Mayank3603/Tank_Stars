@@ -57,7 +57,7 @@ public class Hud {
         this.fire_angle = 70;
         this.power = 40;
 
-        this.pixmap1=new Pixmap(100,20, Pixmap.Format.RGBA8888);
+        this.pixmap1=new Pixmap(400,200, Pixmap.Format.RGBA8888);
         pixmap1.setColor(Color.RED);
         pixmap1.fill();
 
@@ -81,7 +81,7 @@ public class Hud {
         drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
         pixmap.dispose();
 
-        progressBarStyle.knobBefore = drawable;
+        progressBarStyle.knob = drawable;
 
 
         this.w = (float) Gdx.graphics.getWidth();

@@ -10,11 +10,18 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.*;
+
+import static com.badlogic.gdx.utils.JsonValue.ValueType.object;
 
 public class Game_Screen implements Screen {
 
@@ -52,6 +59,9 @@ public class Game_Screen implements Screen {
     private Sprite right_button2;
     private Sprite fuel_icon;
     private Sprite fuel_icon2;
+
+    private World world;
+    private Box2DDebugRenderer b2dr;
     private float w;
     private float h;
     private Hud hud;
@@ -64,7 +74,7 @@ public class Game_Screen implements Screen {
         this.batch = new SpriteBatch();
         hud = new Hud(this.batch);
         mapLoader=new TmxMapLoader();
-        map=mapLoader.load("new_background_terrain.tmx");
+        map=mapLoader.load("rectangle_new.tmx");
         renderer=new OrthogonalTiledMapRenderer(map);
 
 
@@ -141,6 +151,23 @@ public class Game_Screen implements Screen {
         this.tanks1.setPosition(this.w/8,this.h/4-this.h/64);
         this.tanks2.setPosition(this.w-this.w/8,this.h/4+this.h/16+this.h/64);
         this.tanks2.setSize(this.w/16,this.h/14);
+        world = new World(new Vector2(0,0),true);
+        b2dr = new Box2DDebugRenderer();
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fdef = new FixtureDef();
+        Body body;
+
+        for(MapObject object : map.getLayers().get(0).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            bdef.type   = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+ rect.getWidth()/2,rect.getY()+rect.getHeight()/2 );
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
     }
 
     @Override
@@ -161,7 +188,6 @@ public class Game_Screen implements Screen {
         Gdx.gl.glClear(16384);
         batch.setProjectionMatrix(this.hud.stage.getCamera().combined);
 //        this.batch.setProjectionMatrix(this.hud.stage.getCamera().combined);
-
 
         batch.begin();
 
@@ -186,11 +212,13 @@ public class Game_Screen implements Screen {
         this.power.draw(this.batch);
         this.fuel_icon.draw(this.batch);
         this.fuel_icon2.draw(this.batch);
+
         font1.draw(batch,"PLAYER-1",this.w/100,this.h-this.h/20);
         font2.draw(batch,"PLAYER-2",this.w/2+this.w/4+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100,this.h-this.h/20);
 
-
+        b2dr.render(this.world,this.camera.combined);
         batch.end();
+
         this.hud.stage.draw();
         this.hud.stage.act();
         inputhandle(delta);
