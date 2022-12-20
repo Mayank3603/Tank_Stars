@@ -24,6 +24,8 @@ import com.badlogic.gdx.physics.box2d.*;
 
 import javax.crypto.interfaces.PBEKey;
 
+import java.nio.file.attribute.UserPrincipal;
+
 import static com.badlogic.gdx.utils.JsonValue.ValueType.object;
 
 public class Game_Screen implements Screen {
@@ -49,16 +51,15 @@ public class Game_Screen implements Screen {
     private Sprite fuel1;
     private Sprite tanks1;
     private Sprite tanks2;
+    private Sprite air_drop;
     int i = 0;
     int j =0;
     private BitmapFont font1;
     private FreeTypeFontGenerator fontGenerator;
-    int player_1_horizontalforce =0;
-    int player_2_horizontalforce =0;
-    int odd = 1;
-    int even = 0;
-    int fuel_1 = 10;
-    int fuel_2 =10;
+
+    int odd ;
+    int fuel_1 = 100;
+    int fuel_2 =100;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter1;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2;
 
@@ -72,10 +73,12 @@ public class Game_Screen implements Screen {
     private Sprite fuel_icon2;
 
     private World world;
+    int flag = 1;
     private World doing_world;
     private Body player;
     private Body player_tank;
     private Body player_tank2;
+    private  Body airdrop;
 
     private Box2DDebugRenderer b2dr;
     private float w;
@@ -85,6 +88,7 @@ public class Game_Screen implements Screen {
     public Game_Screen(final Tank_Stars_Game tank_stars_game){
         this.tank_stars_game = tank_stars_game;
         this.w = (float) Gdx.graphics.getWidth();
+        this.odd = 1;
         this.h = (float)Gdx.graphics.getHeight();
         (this.camera = new OrthographicCamera(this.w,this.h)).setToOrtho(false);
         this.batch = new SpriteBatch();
@@ -226,8 +230,7 @@ public class Game_Screen implements Screen {
 
     public void update(float dt){
         this.doing_world.step(1/60f,6,2);
-        player_tank.setLinearVelocity(0,player_tank.getLinearVelocity().y);
-        player_tank2.setLinearVelocity(0,player_tank2.getLinearVelocity().y);
+
         inputhandle(dt);
 
 //        this.camera.update();
@@ -268,17 +271,19 @@ public class Game_Screen implements Screen {
         this.power.draw(this.batch);
         this.fuel_icon.draw(this.batch);
         this.fuel_icon2.draw(this.batch);
+        if ((fuel_1  == 500 || fuel_2 == 500) && flag == 1){
+            airdrop = createPlayer(this.w/2,this.h,50,40,false);
+            flag = 1;
+        }
+        if (flag == 1){
+
+        }
         font2.draw(batch,"PLAYER-2",this.w/2+this.w/4+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100,this.h-this.h/20);
         font1.draw(batch,"PLAYER-1",this.w/100,this.h-this.h/20);
-
         batch.end();
         b2dr.render(this.doing_world,this.camera.combined);
-
-
         this.hud.stage.draw();
         this.hud.stage.act();
-
-
     }
 
     public void inputhandle(float dt){
@@ -292,104 +297,70 @@ public class Game_Screen implements Screen {
                 tank_stars_game.setScreen(new Pause_Screen(tank_stars_game,this));
             }
 
+        }
+        player_tank.setLinearVelocity(0,player_tank.getLinearVelocity().y);
+        player_tank2.setLinearVelocity(0,player_tank2.getLinearVelocity().y);
 
-
-
-            }
-//            else{
-//                this.hud.setTank1_fuel(12);
-//                System.out.println(this.hud.getTank1_fuel());
-//                this.hud.stage.draw();
-////               this.camera.position.x += 100*dt;
-//
-//            }
-
-        else {
-           if(this.odd == 1 ){
-                moving_player_1();
-               System.out.println(("gone"));
-            }
-            else if (this.odd == 0 ){
-                moving_player_2();
-               System.out.println("gone 3");
-            }
+    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            moving_left();
+        }
+     if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            moving_right();
+        }
+    if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+        shoot();
         }
     }
-    public void  moving_player_1(){
 
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                this.odd = 0;
-
-                System.out.println("not came name");
-                player_tank.setLinearVelocity(-700000000,player_tank.getLinearVelocity().y);
-//                int i = 0;
-//                while (i < 900000000){
-//                    int j =0 ;
-//                    while ( j < 900000000)
-//                        j++;
-//                    i++;
-//                }
-                this.fuel_1 -= 1;
+    public  void moving_left(){
+        if (this.odd == 1){
+            if (fuel_1 == 0){
+                return;
             }
+            player_tank.setLinearVelocity(-7500000,player_tank.getLinearVelocity().y);
+            fuel_1  -= 1;
 
-            else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-
-
-                this.odd = 0;
-
-                System.out.println("not came name");
-                player_tank.setLinearVelocity(700000000,player_tank.getLinearVelocity().y);
-//                int i = 0;
-//                while (i < 900000000){
-//                    int j =0 ;
-//                    while ( j < 900000000)
-//                        j++;
-//                    i++;
-//                }
-                this.fuel_1 -= 1;
+        } else if (this.odd == 0) {
+            if (fuel_2 == 0){
+                return;
             }
+            player_tank2.setLinearVelocity(-7500000,player_tank2.getLinearVelocity().y);
 
-    }
-    public  void moving_player_2(){
-
-    if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-//               player 2 left button
-//                    System.out.println("1");
-
-        this.odd = 1;
-
-        System.out.println("not came name");
-        player_tank2.setLinearVelocity(-700000000,player_tank2.getLinearVelocity().y);
-//        int i = 0;
-//        while (i < 900000000){
-//            int j =0 ;
-//            while ( j < 900000000)
-//                j++;
-//            i++;
-//        }
-        this.fuel_2 -= 1;
+            fuel_2 -= 1;
+        }
     }
 
-   else  if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-        //               player 2 right button
-//                    System.out.println("1");
+    public  void moving_right(){
+        if (this.odd == 1){
+            if (fuel_1 == 0){
+                return;
+            }
+            player_tank.setLinearVelocity(7500000,player_tank.getLinearVelocity().y);
+            fuel_1 -= 1;
 
-        this.odd = 1;
+        } else if (this.odd == 0) {
+            if (fuel_2 == 0){
+                return;
+            }
+            player_tank2.setLinearVelocity(7500000,player_tank2.getLinearVelocity().y);
+            fuel_2 -= 1;
 
-        player_tank2.setLinearVelocity(700000000,player_tank2.getLinearVelocity().y);
-//
-//        while (i < 900000000){
-//            int j =0 ;
-//            while ( j < 900000000)
-//                j++;
-//            i++;
-//        }
-        this.fuel_2 -= 1;
+        }
     }
-    }
 
-    public void throw_air_drop(){
-        System.out.println("22");
+    public void shoot(){
+
+        if(odd == 0){
+//            shot_flag = 0;
+            this.odd = 1;
+        }
+        else if(odd == 1){
+//            shoot_flag = 1;
+            this.odd= 0;
+        }
+    }
+    public  void throw_air_drop(){
+        air_drop =
     }
 
     @Override
