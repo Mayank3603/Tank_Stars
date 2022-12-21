@@ -33,10 +33,15 @@ public class Game_Screen implements Screen {
     private Vector3 touchpos = new Vector3();
     final Tank_Stars_Game tank_stars_game;
 
+    private final float PPM = 32;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private TmxMapLoader mapLoader;
     private TiledMap map;
+    private  int Health_one;
+    private  int Health_two;
+    private int kill_tank_2;
+    private int is_tank_2_is_destroyed;
 
     private OrthogonalTiledMapRenderer renderer;
 
@@ -80,6 +85,7 @@ public class Game_Screen implements Screen {
     int flag = 1;
     private World doing_world;
     private Body player;
+    int x =-9;
     private Body player_tank;
     private Body player_tank2;
     private  Body airdrop;
@@ -101,7 +107,8 @@ public class Game_Screen implements Screen {
         mapLoader=new TmxMapLoader();
         map=mapLoader.load("rectangle_new.tmx");
         renderer=new OrthogonalTiledMapRenderer(map);
-
+        this.kill_tank_2 = 0;
+        this.is_tank_2_is_destroyed =0;
 
 //        this.terror = new Sprite(new Texture("terrain_red.png"));
 //        this.terror.setSize(this.w,this.h/2);
@@ -175,15 +182,15 @@ public class Game_Screen implements Screen {
         this.power.setPosition(this.w/2-this.w/4+this.w/16+this.w/4-this.w/32,this.h/120);
         doing_world = new World(new Vector2(0,-25f),false);
         b2dr = new Box2DDebugRenderer();
-        player = createPlayer(100,110,this.w,this.h/12+this.h/12+this.h/60+this.h/30,true);
-        player_tank = createPlayer(this.w/4,this.h/2,50,50,false);
-        player_tank2 = createPlayer(this.w-this.w/4,this.h/2,50,50,false);
+        player = createPlayer(100,110,this.w,this.h/12+this.h/12+this.h/60+this.h/30,11.0f,true);
+        player_tank = createPlayer(this.w/4,this.h/2,50,50,10.0f,false);
+        player_tank2 = createPlayer(this.w-this.w/4,this.h/2,50,50,10.0f,false);
 
 
 
 
 
-
+this.doing_world.setContactListener(new Contactlistener(this));
 
 //        doing_world = new World(new Vector2(0,-9.8f),false);
 
@@ -214,7 +221,7 @@ public class Game_Screen implements Screen {
 
     }
 
-    public Body createPlayer(float position_x,float position_y ,float width,float height,boolean is_static){
+    public Body createPlayer(float position_x,float position_y ,float width,float height,float denstity,boolean is_static){
         Body pBody;
         BodyDef def = new BodyDef();
         if (is_static){
@@ -228,22 +235,38 @@ public class Game_Screen implements Screen {
         pBody = doing_world.createBody(def);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width,height);
-        pBody.createFixture(shape,10.0f);
+        pBody.createFixture(shape,denstity).setUserData(pBody);
         shape.dispose();
+
         return  pBody;
+    }
+    public void hit(){
+        System.out.println("getting hit");
     }
 
     public void update(float dt){
+        if (kill_tank_2 ==  1 && is_tank_2_is_destroyed == 0){
+            this.doing_world.destroyBody(this.shoot_flag);
+            this.doing_world.destroyBody(this.player_tank2);
+            this.tanks2.setSize(0,0);
+            is_tank_2_is_destroyed = 1;
+        } else if (is_tank_2_is_destroyed == 0) {
+            this.batch.begin();
+            this.tanks2.setPosition(player_tank2.getPosition().x-40,this.h/4+this.h/16+this.h/64+this.h/64+this.h/64+this.h/64+this.h/64+this.h/128);
+            this.batch.end();
+        }
         this.doing_world.step(1/60f,6,2);
 
         inputhandle(dt);
 
 //        this.camera.update();
-        this.batch.setProjectionMatrix(camera.combined);
+//        this.batch.setProjectionMatrix(camera.combined);
 
         renderer.setView(this.camera);
     }
-
+ public void to_kill_tank_2(){
+        this.kill_tank_2 = 1;
+ }
 
 
     @Override
@@ -251,16 +274,15 @@ public class Game_Screen implements Screen {
         update(Gdx.graphics.getDeltaTime());
         Gdx.gl.glClearColor(1.0f,1.0f,1.0f,1.0f);
         Gdx.gl.glClear(16384);
-        batch.setProjectionMatrix(this.hud.stage.getCamera().combined);
+//        batch.setProjectionMatrix(this.hud.stage.getCamera().combined);
 
         batch.begin();
-        this.tanks1.setPosition(player_tank.getPosition().x-40,this.h/4+this.h/16+this.h/64+this.h/64+this.h/64+this.h/64+this.h/64+this.h/128);
-        this.tanks2.setPosition(player_tank2.getPosition().x-40,this.h/4+this.h/16+this.h/64+this.h/64+this.h/64+this.h/64+this.h/64+this.h/128);
+
         this.background.draw(this.batch);
 
         this.pause_button.draw(this.batch);
         renderer.render();
-
+        this.tanks1.setPosition(player_tank.getPosition().x-40,this.h/4+this.h/16+this.h/64+this.h/64+this.h/64+this.h/64+this.h/64+this.h/128);
 //        this.health_bar.draw(this.batch);
 //        this.health_bar2.draw(this.batch);
         this.fire_button.draw(this.batch);
@@ -282,7 +304,7 @@ public class Game_Screen implements Screen {
         batch.end();
         if ((fuel_1  == 995 || fuel_2 == 995) && flag == 1){
             System.out.println("11");
-            airdrop = createPlayer((player_tank.getPosition().x+player_tank2.getPosition().x)/2,this.h,40,40,false);
+            airdrop = createPlayer((player_tank.getPosition().x+player_tank2.getPosition().x)/2,this.h,40,40,6.0f,false);
             flag = 0;
         }
         if (flag == 0){
@@ -292,25 +314,21 @@ public class Game_Screen implements Screen {
             this.batch.end();
         }
         if(shooting == 0){
-//            for(int i=0; i<projectile.getFixtureList().size;i++){
-//                projectile.getFixtureList().get(i).setSensor(true);
-//            }
-            System.out.println("1");
-            shoot_flag = createPlayer((int)player_tank.getPosition().x +this.w/24+this.w/24, this.h/2,5,5,false);
-            shoot_flag.applyLinearImpulse( 10,10,101,100,true);//            bomb_flag = 0;
+            shoot_flag = createPlayer(player_tank.getPosition().x +this.w/24+this.w/24, this.h/2,5,5,5.0f,false);
+            shoot_flag.applyLinearImpulse(10000000,1060000,shoot_flag.getPosition().x,shoot_flag.getPosition().y,true);
             shooting = -1;
         }
         if (shooting == 1){
-
+            shoot_flag = createPlayer(player_tank2.getPosition().x -this.w/24-this.w/24, this.h/2,5,5,5.0f,false);
+            shoot_flag.applyLinearImpulse(-10000000,1060000,shoot_flag.getPosition().x,shoot_flag.getPosition().y,true);
+            shooting = -1;
         }
         b2dr.render(this.doing_world,this.camera.combined);
-        this.hud.stage.draw();
-        this.hud.stage.act();
+//        this.hud.stage.draw();
+//        this.hud.stage.act();
     }
 
     public void inputhandle(float dt){
-
-
         if (Gdx.input.justTouched()){
             this.touchpos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             this.camera.unproject(touchpos);
@@ -343,6 +361,7 @@ public class Game_Screen implements Screen {
             System.out.println("fuel_1");
             System.out.println(fuel_1);
             fuel_1  -= 1;
+        x =9;
 
         } else if (this.odd == 0) {
             if (fuel_2 == 0){
@@ -350,6 +369,7 @@ public class Game_Screen implements Screen {
             }
             player_tank2.setLinearVelocity(-7500000,player_tank2.getLinearVelocity().y);
             fuel_2 -= 1;
+            x = 8;
         }
     }
 
@@ -358,30 +378,34 @@ public class Game_Screen implements Screen {
             if (fuel_1 == 0){
                 return;
             }
-            player_tank.setLinearVelocity(7500000,player_tank.getLinearVelocity().y);
+            player_tank.setLinearVelocity(9500000,player_tank.getLinearVelocity().y);
             System.out.println("fuel_1");
             System.out.println(fuel_1);
             fuel_1 -= 1;
+            x = 9;
 
-        } else if (this.odd == 0) {
+
+        } else if (this.odd == 0 ) {
             if (fuel_2 == 0){
+
                 return;
             }
-            player_tank2.setLinearVelocity(7500000,player_tank2.getLinearVelocity().y);
+            player_tank2.setLinearVelocity(9500000,player_tank2.getLinearVelocity().y);
             fuel_2 -= 1;
+            x =8;
 
         }
     }
 
     public void shoot(){
 
-        if(odd == 0){
+        if(odd == 1 && x == 9){
             this.shooting = 0;
-            this.odd = 1;
+            this.odd = 0;
         }
-        else if(odd == 1){
+        else if(odd == 0 && x == 8){
              this.shooting= 1;
-            this.odd= 0;
+            this.odd= 1;
         }
     }
     public  void throw_air_drop(){
