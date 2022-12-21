@@ -56,6 +56,9 @@ public class Game_Screen implements Screen {
 
     private  int is_remove_shoot_missile;
     private int kill_shoot_missile;
+    private int angle1 = 0;
+    private int angle2 =0;
+    private int angle_set =0;
 
     private OrthogonalTiledMapRenderer renderer;
 
@@ -147,6 +150,7 @@ private float width_1;
     String string_fuel2;
     String string_health1;
     String string_health2;
+    int power_set;
     String string_power1;
     String string_power2;
     String string_angle_of_fire1;
@@ -542,8 +546,8 @@ this.doing_world.setContactListener(new Contactlistener(this));
         font4.draw(batch,string_health1,this.w/2-(this.w/8),this.h-this.h/100);
         font4.draw(batch,string_health2,this.w/2+this.w/18,this.h-this.h/100);
 
-        font5.draw(batch,"5",this.w/2-this.w/4+this.w/16+this.w/4+this.w/32+this.w/80,this.h/12+this.h/50+this.h/200);
-        font6.draw(batch,"6°",this.w/2-this.w/4+this.w/16+this.w/32+this.w/80,this.h/12+this.h/50+this.h/200 );
+        font5.draw(batch,String.valueOf(power_set),this.w/2-this.w/4+this.w/16+this.w/4+this.w/32+this.w/80,this.h/12+this.h/50+this.h/200);
+        font6.draw(batch,String.valueOf(angle_set),this.w/2-this.w/4+this.w/16+this.w/32+this.w/80,this.h/12+this.h/50+this.h/200 );
         batch.end();
         if ((this.player1.getFuel() == 700 || this.player1.getFuel() == 700) &&flag == 1 && is_air_drop_remove == 0){
             this.is_air_drop_remove =0;
@@ -578,7 +582,7 @@ this.doing_world.setContactListener(new Contactlistener(this));
             this.is_remove_shoot_missile = 0;
             this.kill_shoot_missile = 0;
             shoot_flag = createPlayer(player_tank.getPosition().x +this.w/24-this.w/128, this.h/2,5,5,5.0f,false);
-            shoot_flag.applyLinearImpulse(10000000,1060000,shoot_flag.getPosition().x,shoot_flag.getPosition().y,true);
+            shoot_flag.applyLinearImpulse((8000)*(angle_set+(power_set)*4)*10,8000*(angle_set+(power_set)*4)*10,shoot_flag.getPosition().x,shoot_flag.getPosition().y,true);
             flag_2 = 7;
             this.leftmissile = new Sprite(new Texture("moving_right_bomb-removebg-preview.png"));
             this.leftmissile.setSize(30,30);
@@ -597,7 +601,7 @@ this.doing_world.setContactListener(new Contactlistener(this));
             this.rightmissile = new Sprite(new Texture("moving_left_bomb-removebg-preview.png"));
             this.rightmissile.setSize(30,30);
             shoot_flag = createPlayer(player_tank2.getPosition().x -this.w/24+this.w/128, this.h/2,5,5,5.0f,false);
-            shoot_flag.applyLinearImpulse(-10000000,1060000,shoot_flag.getPosition().x,shoot_flag.getPosition().y,true);
+            shoot_flag.applyLinearImpulse(-(8000)*(angle_set+power_set)*10,8000*(angle_set+power_set)*10,shoot_flag.getPosition().x,shoot_flag.getPosition().y,true);
             flag_3 = 7;
 
 
@@ -653,6 +657,61 @@ this.doing_world.setContactListener(new Contactlistener(this));
             if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
             tank_stars_game.setScreen(new Main_Screen(this.tank_stars_game));}
         }
+        if (power1 == 1){
+
+            if (Gdx.input.isKeyPressed(Input.Keys.UP)){
+                System.out.println("done");
+                power_increase();
+
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+                power_decrease();
+            }
+        }
+        if (power2 == 1){
+
+            if (Gdx.input.isKeyPressed(Input.Keys.UP)){
+
+                power_increase();
+
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+                power_decrease();
+            }
+        }
+        if (angle1 == 1){
+            if (Gdx.input.isKeyPressed(Input.Keys.W)){
+                angle_increase();
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.S)){
+                angle_decrease();
+            }
+        }
+        if (angle2 == 1){
+            if (Gdx.input.isKeyPressed(Input.Keys.W)){
+                angle_increase();
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.S)){
+                angle_decrease();
+            }
+        }
+
+
+//        if (power2 == 1){
+//
+//        }
+    }
+    public void power_increase(){
+        power_set += 1;
+    }
+    public void power_decrease(){
+        power_set -= 1;
+    }
+    public void angle_increase(){
+        angle_set +=1;
+    }
+    public void angle_decrease(){
+        angle_set -= 1;
     }
 
     public  void moving_left(){
@@ -670,12 +729,23 @@ this.doing_world.setContactListener(new Contactlistener(this));
             this.player1.setFuel(1);
             fuel_1  -= 1;
 
+
             x =9;
+            power1 = 1;
+            power_set=0;
+            angle_set =0;
+            angle1 = 1;
+
 
         } else if (this.odd == 0) {
             if (this.player2.getFuel()== 0){
                 return;
             }
+
+            power2 = 1;
+            power_set =0;
+            angle_set = 0;
+            angle2 = 1;
             player_tank2.setLinearVelocity(-7500000,player_tank2.getLinearVelocity().y);
             player2.setPos_x(player_tank2.getPosition().x);
             player2.setPos_y(player_tank2.getPosition().y);
@@ -695,7 +765,10 @@ this.doing_world.setContactListener(new Contactlistener(this));
 
                 return;
             }
-
+            power1 = 1;
+            power_set =0;
+            angle_set = 0;
+            angle1 = 1;
             player_tank.setLinearVelocity(75000000,player_tank.getLinearVelocity().y);
             player1.setPos_x(player_tank.getPosition().x);
             player1.setPos_y(player_tank.getPosition().y);
@@ -714,23 +787,29 @@ this.doing_world.setContactListener(new Contactlistener(this));
             player2.setPos_x(player_tank2.getPosition().x);
             player2.setPos_y(player_tank2.getPosition().y);
             this.player2.setFuel(1);
+            power2 = 1;
+            power_set =0;
+            angle_set = 0;
+            angle2 = 1;
             x =8;
 
         }
     }
 
     public void shoot(){
-
         if(odd == 1){
             if (flag_2 == -9){
             this.shooting = 0;
             this.odd = -1;
+            power1 = 0;
+
             }
         }
         else if(odd == 0 ){
             if (flag_3 == -9){
              this.shooting= 1;
              this.odd = -1;
+             power2 =0;
             }
         }
     }
