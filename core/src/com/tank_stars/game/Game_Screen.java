@@ -549,7 +549,7 @@ this.doing_world.setContactListener(new Contactlistener(this));
         font5.draw(batch,String.valueOf(power_set),this.w/2-this.w/4+this.w/16+this.w/4+this.w/32+this.w/80,this.h/12+this.h/50+this.h/200);
         font6.draw(batch,String.valueOf(angle_set),this.w/2-this.w/4+this.w/16+this.w/32+this.w/80,this.h/12+this.h/50+this.h/200 );
         batch.end();
-        if ((this.player1.getFuel() == 700 || this.player1.getFuel() == 700) &&flag == 1 && is_air_drop_remove == 0){
+        if ((this.player1.getFuel() == 800 || this.player1.getFuel() == 800) &&flag == 1 && is_air_drop_remove == 0){
             this.is_air_drop_remove =0;
             this.kill_air_drop = 0;
             airdrop = createPlayer((player_tank.getPosition().x+player_tank2.getPosition().x)/2,this.h,40,40,6.0f,false);
