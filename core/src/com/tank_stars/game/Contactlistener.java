@@ -88,7 +88,7 @@ Game_Screen game_screen;
             return 2;
         }
 
-        if (a.getDensity() == 40.0f && b.getDensity() == 5.0f){
+        if (a.getDensity() == 12.0f && b.getDensity() == 5.0f){
             return 3;
         }
         if (a.getDensity() == 5.0f && b.getDensity() == 12.0f){

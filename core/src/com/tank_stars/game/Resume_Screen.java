@@ -152,7 +152,8 @@ public void deserialize() throws IOException,ClassNotFoundException{
             in =new ObjectInputStream(new FileInputStream("out.txt"));
             player1=(Tank)in.readObject();
             player2=(Tank)in.readObject();
-
+            this.tank_stars_game.setTank_1(player1);
+            this.tank_stars_game.setTank_2(player2);
 
         }
         finally {
@@ -166,8 +167,9 @@ public void deserialize() throws IOException,ClassNotFoundException{
             this.touchpos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             this.camera.unproject(touchpos);
             if (touchpos.x >= (this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6 && touchpos.y >=this.h/30+this.h/2+this.h/5&& touchpos.y<=this.h/30+this.h/2+this.h/5+ this.h/12){
-//                tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
                     this.deserialize();
+                    tank_stars_game.setScreen(new Game_Screen(this.tank_stars_game));
+
             }
             else if (touchpos.x >=(this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6&& touchpos.y >= this.h/30+this.h/2 && touchpos.y<=this.h/30+this.h/2+ this.h/12) {
                 tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
