@@ -15,6 +15,7 @@ public class Choose_player2 implements Screen {
 
     final  Tank_Stars_Game tank_stars_game;
     private Vector3 touchpos = new Vector3();
+    private Choose_player2 choose_player2=null;
 
     private float w;
     private float h;
@@ -73,6 +74,7 @@ public class Choose_player2 implements Screen {
         fontParameter2.color= Color.BLACK;
         font2=fontGenerator.generateFont(fontParameter2);
     }
+
 
     @Override
     public void show() {

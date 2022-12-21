@@ -30,10 +30,11 @@ public class Choose_Player1 implements Screen {
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2;
     private BitmapFont font1;
     private BitmapFont font2;
+    private static Choose_Player1 choose_player1=null;
 
 
 
-    public Choose_Player1(final Tank_Stars_Game tank_stars_game ){
+    private Choose_Player1(final Tank_Stars_Game tank_stars_game ){
         this.tank_stars_game = tank_stars_game;
         this.w = (float) Gdx.graphics.getWidth();
         this.h = (float)Gdx.graphics.getHeight();
@@ -72,6 +73,14 @@ public class Choose_Player1 implements Screen {
         fontParameter2.color= Color.BLACK;
         font2=fontGenerator.generateFont(fontParameter2);
     }
+    public static Choose_Player1 getInstance(Tank_Stars_Game tank_stars_game){
+        if (choose_player1==null){
+            choose_player1=new Choose_Player1(tank_stars_game);
+
+        }
+        return choose_player1;
+    }
+
 
     @Override
     public void show() {
