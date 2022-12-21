@@ -71,6 +71,14 @@ public class Game_Screen implements Screen {
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2;
 
     private BitmapFont font2;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter3;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter4;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter5;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter6;
+    private BitmapFont font3;
+    private BitmapFont font4;
+    private BitmapFont font5;
+    private BitmapFont font6;
 //    private Sprite terror;
     private Sprite power;
 
@@ -95,6 +103,9 @@ public class Game_Screen implements Screen {
     private float w;
     private float h;
     private Hud hud;
+
+    private Tank player1;
+    private Tank player2;
 
     public Game_Screen(final Tank_Stars_Game tank_stars_game){
         this.tank_stars_game = tank_stars_game;
@@ -140,6 +151,7 @@ public class Game_Screen implements Screen {
 
 
 
+
         fontParameter1.borderWidth=(int)(this.w/240);
         font1=fontGenerator.generateFont(fontParameter1);
         fontParameter2=new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -148,11 +160,37 @@ public class Game_Screen implements Screen {
         fontParameter2.size=(int)(this.w/20);
         fontParameter2.color= Color.BLACK;
         font2=fontGenerator.generateFont(fontParameter2);
+        //fuel
+        fontParameter3=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter3.size= (int) (this.w/40);
+        fontParameter3.color= Color.BLACK;
+        fontParameter3.borderColor=Color.WHITE;
+        fontParameter3.borderWidth=(int)(this.w/480);
+        font3=fontGenerator.generateFont(fontParameter3);
+// health
+        fontParameter4=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter4.borderColor=Color.WHITE;
+        fontParameter4.borderWidth=(int)(this.w/240);
+        fontParameter4.size=(int)(this.w/20);
+        fontParameter4.color= Color.GREEN;
+        font4=fontGenerator.generateFont(fontParameter4);
+//power
+        fontParameter5=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter5.size= (int) (this.w/40);
+        fontParameter5.color= Color.BROWN;
+        fontParameter5.borderColor=Color.WHITE;
+        fontParameter5.borderWidth=(int)(this.w/480);
+        font5=fontGenerator.generateFont(fontParameter5);
+// angle
+        fontParameter6=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter6.borderColor=Color.WHITE;
+        fontParameter6.borderWidth=(int)(this.w/480);
+        fontParameter6.size=(int)(this.w/40);
+        fontParameter6.color= Color.BLUE;
+        font6=fontGenerator.generateFont(fontParameter6);
+
+
         this.background.setSize(this.w,this.h);
-//        this.health_bar.setSize(this.w/20+(this.w/20)*2,this.h/20);
-//        this.health_bar.setPosition(this.w/2-(this.w/16)*3,this.h-this.h/20);
-//        this.health_bar2.setSize(this.w/20+(this.w/20)*2,this.h/20);
-//        this.health_bar2.setPosition(this.w-(this.w/8)*4+3*(this.w/32),this.h-this.h/20);
         this.pause_button.setSize(this.w/20,this.h/20);
         this.pause_button.setPosition((this.w/2),this.h-this.h/20);
         this.fire_button.setSize(this.w/16,this.h/8);
@@ -283,8 +321,6 @@ this.doing_world.setContactListener(new Contactlistener(this));
         this.pause_button.draw(this.batch);
         renderer.render();
         this.tanks1.setPosition(player_tank.getPosition().x-40,this.h/4+this.h/16+this.h/64+this.h/64+this.h/64+this.h/64+this.h/64+this.h/128);
-//        this.health_bar.draw(this.batch);
-//        this.health_bar2.draw(this.batch);
         this.fire_button.draw(this.batch);
         this.left_button.draw(this.batch);
         this.right_button.draw(this.batch);
@@ -298,9 +334,33 @@ this.doing_world.setContactListener(new Contactlistener(this));
         this.power.draw(this.batch);
         this.fuel_icon.draw(this.batch);
         this.fuel_icon2.draw(this.batch);
+        try{
+            String string_fuel1= String.valueOf(this.player1.getFuel());
+            String string_fuel2= String.valueOf(this.player2.getFuel());
+            String string_health1=String.valueOf(this.player1.getHealth());
+            String string_health2=String.valueOf(this.player1.getHealth());
+            String string_power1=String.valueOf(this.player1.getShoot_power());
+            String string_power2=String.valueOf(this.player1.getShoot_power());
+            String string_angle_of_fire1=String.valueOf(this.player1.getAngle());
+            String string_angle_of_fire2=String.valueOf(this.player1.getAngle());
+        }
+        catch(NullPointerException e){
+            System.out.println("this is currently null");
+
+        }
+
+
 
         font2.draw(batch,"PLAYER-2",this.w/2+this.w/4+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100,this.h-this.h/20);
         font1.draw(batch,"PLAYER-1",this.w/100,this.h-this.h/20);
+        font3.draw(batch,"1",this.w/20+this.w/50+this.w/100,this.h/10+this.h/100);
+        font3.draw(batch,"2",this.w-this.w/20-this.w/12,this.h/10+this.h/100);
+
+        font4.draw(batch,"100 HP",this.w/2-(this.w/8),this.h-this.h/100);
+        font4.draw(batch,"100 HP",this.w/2+this.w/18,this.h-this.h/100);
+
+        font5.draw(batch,"5",this.w/2-this.w/4+this.w/16+this.w/4+this.w/32+this.w/80,this.h/12+this.h/50+this.h/200);
+        font6.draw(batch,"6°",this.w/2-this.w/4+this.w/16+this.w/32+this.w/80,this.h/12+this.h/50+this.h/200 );
         batch.end();
         if ((fuel_1  == 995 || fuel_2 == 995) && flag == 1){
             System.out.println("11");

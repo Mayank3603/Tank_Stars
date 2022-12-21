@@ -4,19 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Tank implements Fireweaponer , Serializable {
+public class Tank implements Fireweaponer , Serializable {
     private float pos_x;
     private float pos_y;
-    private int Fuel;
+    private int Fuel=1000;
     private String type;
 
-    public int getHealth() {
-        return Health;
-    }
+
 
     private int Health = 100;
-    private float Angle;
-    private float shoot_power;
+    private float Angle=70;
+    private float shoot_power=70;
     private List<Weapons> weapons ;
     private  Weapons weapon;
     public String name ;
@@ -30,7 +28,9 @@ public abstract class Tank implements Fireweaponer , Serializable {
         Health = health;
     }
 
-    public abstract void getweapon();
+    public void getweapon(){
+
+    }
 
 
 
@@ -39,7 +39,9 @@ public abstract class Tank implements Fireweaponer , Serializable {
         this.add_weapons();
 
     }
-    public abstract void add_weapons();
+    public  void add_weapons(){
+
+    }
 
 
     public void leftmove(){
@@ -62,6 +64,26 @@ public abstract class Tank implements Fireweaponer , Serializable {
     public void setShoot_power(){
 
     }
+    public int getHealth() {
+        return Health;
+    }
+
+    public int getFuel() {
+        return Fuel;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public float getAngle() {
+        return Angle;
+    }
+
+    public float getShoot_power() {
+        return shoot_power;
+    }
+
     public final void Steps_to_follow(String choice){
         make_move(choice);
         set_projectile();
