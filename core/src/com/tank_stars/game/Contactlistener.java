@@ -22,9 +22,27 @@ Game_Screen game_screen;
         if (fa.getUserData() == null || fb.getUserData() == null){
             return;
         }
-        if (ischeckingcontact(fa,fb)){
-            this.game_screen.to_kill_tank_2();
+        if (ischeckingcontact(fa,fb) == 1){
+            this.game_screen.to_kill_shoot_flag();
             System.out.println("collison happen");
+        }
+        if (ischeckingcontact(fa,fb) == 2 ){
+            this.game_screen.setHealth_two(10);
+            this.game_screen.to_kill_tank_2();
+        }
+        if (ischeckingcontact(fa,fb) == 3){
+            this.game_screen.setHealth_one(10);
+            this.game_screen.to_kill_tank_1();
+        }
+        if (ischeckingcontact(fa,fb) == 4){
+            System.out.println("agaya");
+            this.game_screen.to_remove_air_drop_tank1();
+        }
+        if (ischeckingcontact(fa,fb) == 5){
+            this.game_screen.to_remove_air_drop_tank2();
+        }
+        if (ischeckingcontact(fa,fb) == 6){
+            this.game_screen.to_kill_shoot_flag();
         }
 
     }
@@ -51,21 +69,50 @@ Game_Screen game_screen;
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
-    private boolean ischeckingcontact(Fixture a ,Fixture b){
+    private int ischeckingcontact(Fixture a ,Fixture b){
         System.out.println(a.getDensity());
         System.out.println(b.getDensity());
+
         if (a.getDensity() == 11.0f && b.getDensity() == 5.0f){
-            return true;
+            return 1;
         }
+
         if (a.getDensity() == 5.0f && b.getDensity() == 11.0f){
-            return true;
+            return 1;
         }
+
         if (a.getDensity() == 10.0f && b.getDensity() == 5.0f){
-            return true;
+            return 2;
         }
         if (a.getDensity() == 5.0f && b.getDensity() == 10.0f){
-            return true;
+            return 2;
         }
-        return false;
+
+        if (a.getDensity() == 40.0f && b.getDensity() == 5.0f){
+            return 3;
+        }
+        if (a.getDensity() == 5.0f && b.getDensity() == 12.0f){
+            return 3;
+        }
+
+        if (a.getDensity() == 12.0f && b.getDensity() == 6.0f){
+            return 4;
+        }
+        if (a.getDensity() == 6.0f && b.getDensity() == 12.0f){
+            return 4;
+        }
+        if (a.getDensity() == 10.0f && b.getDensity() == 6.0f){
+            return 5;
+        }
+        if (a.getDensity() == 6.0f && b.getDensity() == 10.0f){
+            return 5;
+        }
+        if (a.getDensity() == 5.0f && b.getDensity() == 6.0f){
+            return 6;
+        }
+        if (a.getDensity() == 6.0f && b.getDensity() == 5.0f){
+            return 6;
+        }
+        return 0;
     }
 }

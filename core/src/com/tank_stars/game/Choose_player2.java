@@ -106,19 +106,19 @@ public class Choose_player2 implements Screen {
             this.camera.unproject(touchpos);
             if (touchpos.x >= (this.w/12)-this.w/24 && touchpos.x <= (this.w/12)-this.w/24+this.w/3-this.w/12 && touchpos.y >= this.h/8 && touchpos.y<=this.h/8+ this.h/3){
 
-                tank_stars_game.setTank_1(new Helios_Tank());
+                tank_stars_game.setTank_2(new Helios_Tank());
                 tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
 
             }
             else if (touchpos.x >= (this.w/12)+2*this.w/3-this.w/24&& touchpos.x <=  (this.w/12)+2*this.w/3-this.w/24+this.w/3-this.w/12&& touchpos.y >= this.h/8 && touchpos.y<=this.h/8+ this.h/3) {
 
-                tank_stars_game.setTank_1(new Mark_1_Tank());
+                tank_stars_game.setTank_2(new Mark_1_Tank());
                 tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
 
             }
             else if (touchpos.x >= (this.w/12)+this.w/3-this.w/24 && touchpos.x <= (this.w/12)+this.w/3-this.w/24+this.w/3-this.w/12&& touchpos.y >= this.h/8 && touchpos.y<=this.h/8+this.h/3) {
 
-                tank_stars_game.setTank_1(new T_34_Tank());
+                tank_stars_game.setTank_2(new T_34_Tank());
                 tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
 
             }

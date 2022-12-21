@@ -9,10 +9,7 @@ public class Tank implements Fireweaponer , Serializable {
     private float pos_y;
     private int Fuel=1000;
     private String type;
-
-
-
-    private int Health = 100;
+    private int Health = 20;
     private float Angle=70;
     private float shoot_power=70;
     private List<Weapons> weapons ;
@@ -21,11 +18,11 @@ public class Tank implements Fireweaponer , Serializable {
     private int weapons_quantity;
     private int no_of_moves=5;
     public void setFuel(int fuel) {
-        Fuel = fuel;
+        Fuel = Fuel-fuel;
     }
 
     public void setHealth(int health) {
-        Health = health;
+        Health = Health-health;
     }
 
     public void getweapon(){
