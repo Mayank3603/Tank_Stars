@@ -15,19 +15,11 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
-import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesHandlerImpl;
-
-import javax.crypto.interfaces.PBEKey;
-
-import java.nio.file.attribute.UserPrincipal;
-
-import static com.badlogic.gdx.utils.JsonValue.ValueType.object;
 
 public class Game_Screen implements Screen {
 
@@ -139,6 +131,8 @@ private int price_2 =0;
 private String s = "Player-1";
 private String ss = "Player_2";
 private float  heigth_1 ;
+int za = -1;
+int zb = -1;
 private float height_2;
 private float width_2;
 private float width_1;
@@ -156,9 +150,16 @@ private float width_1;
     String string_power1;
     String string_power2;
     String string_angle_of_fire1;
+    int power1;
+    int power2;
     String string_angle_of_fire2;
 
     int f =0;
+
+    private float width11;
+    private float height11;
+    private float width22;
+    private float height22;
 
     public Game_Screen(final Tank_Stars_Game tank_stars_game){
         this.tank_stars_game = tank_stars_game;
@@ -166,9 +167,6 @@ private float width_1;
         this.player2 = tank_stars_game.getTank_2();
 
 
-//        this.Health_two = tank_stars_game.getTank_1().getHealth();
-//        this.Health_one = tank_stars_game.getTank_1().getHealth();
-//        System.out.println(player1.getAngle());
         this.w = (float) Gdx.graphics.getWidth();
         this.odd = 1;
         this.h = (float)Gdx.graphics.getHeight();
@@ -291,9 +289,13 @@ private float width_1;
         this.power.setPosition(this.w/2-this.w/4+this.w/16+this.w/4-this.w/32,this.h/120);
         doing_world = new World(new Vector2(0,-50f),false);
         b2dr = new Box2DDebugRenderer();
+        player1.setPos_x(this.w/4);
+        player1.setPos_y(this.h/2);
+        player2.setPos_x(this.w-this.w/4);
+        player2.setPos_y(this.h/2);
         player = createPlayer(100,110,this.w,this.h/12+this.h/12+this.h/60+this.h/30,11.0f,true);
-        player_tank = createPlayer(this.w/4,this.h/2,30,30,12.0f,false);
-        player_tank2 = createPlayer(this.w-this.w/4,this.h/2,30,30,10.0f,false);
+        player_tank = createPlayer(player1.getPos_x(),player1.getPos_y(),30,30,12.0f,false);
+        player_tank2 = createPlayer(player2.getPos_x(),player2.getPos_y(),30,30,10.0f,false);
 
 
 
@@ -401,7 +403,7 @@ this.doing_world.setContactListener(new Contactlistener(this));
         renderer.setView(this.camera);
     }
  public void to_kill_tank_2(){
-        if (this.player2.getHealth() == 0){
+        if (this.player2.getHealth() <= 0){
                 s = "player 1 win";
                 this.width_1 = this.w/2;
                 this.heigth_1 = this.h/2;
@@ -410,22 +412,25 @@ this.doing_world.setContactListener(new Contactlistener(this));
         this.kill_tank_2 = 1;
 
         f = 1;}
-        else {  this.odd = 0; this.kill_shoot_missile = 1;}
+        else { this.zb = 1; this.odd = 0; this.kill_shoot_missile = 1;}
 
 
  }
  public void to_kill_shoot_flag(){
         this.kill_shoot_missile = 1;
+
      if (x == 9 ){
          odd = 0;
+
      }
      if (x == 8 ){
          odd = 1;
+
      }
         this.flag_2 = 9;
  }
  public void to_kill_tank_1(){
-        if (this.player1.getHealth()== 0){
+        if (this.player1.getHealth()<= 0){
 
         this.kil_tank_1 = 1;
         this.ss = "Player 2 wins";
@@ -434,6 +439,7 @@ this.doing_world.setContactListener(new Contactlistener(this));
         f = 1;
         }
         else {
+            this.za = 1;
         this.kill_shoot_missile = 1;
         this.odd = 1;}
 
@@ -511,8 +517,8 @@ this.doing_world.setContactListener(new Contactlistener(this));
         this.fuel_icon.draw(this.batch);
         this.fuel_icon2.draw(this.batch);
         try{
-            string_fuel1= String.valueOf(this.player1.getFuel());
-            string_fuel2= String.valueOf(this.player2.getFuel());
+            string_fuel1= String.valueOf((int)(this.player1.getFuel()/100));
+            string_fuel2= String.valueOf((int)(this.player2.getFuel()/100));
             string_health1=String.valueOf(this.player1.getHealth());
             string_health2=String.valueOf(this.player2.getHealth());
             string_power1=String.valueOf(this.player1.getShoot_power());
@@ -521,7 +527,7 @@ this.doing_world.setContactListener(new Contactlistener(this));
             string_angle_of_fire2=String.valueOf(this.player1.getAngle());
             this.width_1 =this.w/100;
             this.heigth_1 = this.h-this.h/20;
-            this.width_2 = this.w/2+this.w/4+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100+this.w/100;
+            this.width_2 = this.w/2+this.w/4;
             this.height_2 = this.h-this.h/20;
         }
         catch(NullPointerException e){
@@ -603,7 +609,20 @@ this.doing_world.setContactListener(new Contactlistener(this));
             this.rightmissile.draw(this.batch);
             this.batch.end();
         }
+        if (za == 1){
+            player_tank.setLinearVelocity(-7500000,player_tank2.getLinearVelocity().y);
+            player_tank.setLinearVelocity(-7500000,player_tank2.getLinearVelocity().y);
+            player_tank.setLinearVelocity(-7500000,player_tank2.getLinearVelocity().y);
+            za = 0;
+        }
 
+        if (zb == 1){
+            System.out.println("reached");
+            player_tank2.setLinearVelocity(7500000,player_tank.getLinearVelocity().y);
+            player_tank2.setLinearVelocity(7500000,player_tank.getLinearVelocity().y);
+            player_tank2.setLinearVelocity(7500000,player_tank.getLinearVelocity().y);
+            zb =0;
+        }
         b2dr.render(this.doing_world,this.camera.combined);
 //        this.hud.stage.draw();
 //        this.hud.stage.act();
@@ -639,15 +658,15 @@ this.doing_world.setContactListener(new Contactlistener(this));
     public  void moving_left(){
         if (this.odd == 1){
            if (z == 0){
-
                z =1;
            }
             if (this.player1.getFuel()== 0){
-
                 return;
             }
-
             player_tank.setLinearVelocity(-7500000,player_tank.getLinearVelocity().y);
+            player1.setPos_x(player_tank.getPosition().x);
+            player1.setPos_y(player_tank.getPosition().y);
+
             this.player1.setFuel(1);
             fuel_1  -= 1;
 
@@ -658,6 +677,8 @@ this.doing_world.setContactListener(new Contactlistener(this));
                 return;
             }
             player_tank2.setLinearVelocity(-7500000,player_tank2.getLinearVelocity().y);
+            player2.setPos_x(player_tank2.getPosition().x);
+            player2.setPos_y(player_tank2.getPosition().y);
             this.player2.setFuel(1);
             fuel_2 -= 1;
             x = 8;
@@ -676,7 +697,8 @@ this.doing_world.setContactListener(new Contactlistener(this));
             }
 
             player_tank.setLinearVelocity(75000000,player_tank.getLinearVelocity().y);
-
+            player1.setPos_x(player_tank.getPosition().x);
+            player1.setPos_y(player_tank.getPosition().y);
             this.player1.setFuel(1);
             fuel_1 -= 1;
             x = 9;
@@ -689,6 +711,8 @@ this.doing_world.setContactListener(new Contactlistener(this));
             }
             player_tank2.setLinearVelocity(75000000,player_tank2.getLinearVelocity().y);
             fuel_2 -= 1;
+            player2.setPos_x(player_tank2.getPosition().x);
+            player2.setPos_y(player_tank2.getPosition().y);
             this.player2.setFuel(1);
             x =8;
 

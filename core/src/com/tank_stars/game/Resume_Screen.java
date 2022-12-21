@@ -23,6 +23,8 @@ public class Resume_Screen implements Screen, Serializable {
     final Tank_Stars_Game tank_stars_game;
     private OrthographicCamera camera;
     private SpriteBatch batch;
+    String done;
+    String done_2;
 
     private Sprite bg;
     private float w;
@@ -33,9 +35,13 @@ public class Resume_Screen implements Screen, Serializable {
     FileReader total =null;
     ObjectInputStream out = null;
     private FreeTypeFontGenerator fontGenerator;
+
     private List<BitmapFont> font;
+
     private BitmapFont font1;
+    private BitmapFont font2;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter1;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter8;
     private Vector3 postion_saved_game = new Vector3();
     private  List<Vector3> postion_saved;
     private Sprite resume_button;
@@ -47,7 +53,8 @@ public class Resume_Screen implements Screen, Serializable {
 
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2;
 
-    private BitmapFont font2;
+    private BitmapFont font5;
+    private BitmapFont font6;
 
     public Resume_Screen(final  Tank_Stars_Game tank_stars_game) throws IOException {
         this.tank_stars_game = tank_stars_game;
@@ -59,9 +66,9 @@ public class Resume_Screen implements Screen, Serializable {
         this.batch = new SpriteBatch();
         this.bg = new Sprite(new Texture("saved_gamed.png"));
         this.bg.setSize(this.w,this.h);
-        this.resume_button = new Sprite(new Texture("saved_game1.png"));
-        this.saved_button = new Sprite(new Texture("saved_game2.png"));
-        this.exit_button = new Sprite(new Texture("saved_game3.png"));
+        this.resume_button = new Sprite(new Texture("new_game.png"));
+        this.saved_button = new Sprite(new Texture("new_game.png"));
+        this.exit_button = new Sprite(new Texture("new_game.png"));
         this.back_button = new Sprite(new Texture("back_button.png"));
 
         this.resume_button.setSize(this.w/6,this.h/12);
@@ -80,12 +87,15 @@ public class Resume_Screen implements Screen, Serializable {
         fontParameter1.borderColor=Color.WHITE;
         fontParameter1.borderWidth=(int)(this.w/240);
         font1=fontGenerator.generateFont(fontParameter1);
+        font5 = fontGenerator.generateFont(fontParameter1);
+        font6 = fontGenerator.generateFont(fontParameter1);
         fontParameter2=new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontParameter2.borderColor=Color.WHITE;
         fontParameter2.borderWidth=(int)(this.w/240);
         fontParameter2.size=(int)(this.w/8);
         fontParameter2.color= Color.BLACK;
         font2=fontGenerator.generateFont(fontParameter2);
+
         try {
             total = new FileReader("Total_saved_game");
             int c;
@@ -111,6 +121,7 @@ public class Resume_Screen implements Screen, Serializable {
 
         }
 
+
     }
 
     @Override
@@ -127,6 +138,8 @@ public class Resume_Screen implements Screen, Serializable {
 
         this.bg.draw(batch);
         font1.draw(batch,"LOAD GAMES",(this.w/10)+this.w/3,this.h-this.h/20);
+
+
         this.resume_button.draw(this.batch);
         this.exit_button.draw(this.batch);
         this.saved_button.draw(this.batch);
@@ -135,6 +148,21 @@ public class Resume_Screen implements Screen, Serializable {
 
         this.batch.end();
         try {
+            deserialize();
+            this.batch.begin();
+
+
+            fontParameter8=new FreeTypeFontGenerator.FreeTypeFontParameter();
+            fontParameter8.size= (int) (this.w/40);
+            fontParameter8.color= Color.BLACK;
+            fontParameter8.borderColor=Color.WHITE;
+            fontParameter8.borderWidth=(int)(this.w/200);
+            font5=fontGenerator.generateFont(fontParameter8);
+            font6=fontGenerator.generateFont(fontParameter8);
+            font5.draw(batch,done,(this.w/10)+this.w/3,this.h/30+this.h/2+this.h/5+this.h/10);
+            font6.draw(batch,done_2,(this.w/10)+this.w/3,this.h/30+this.h/2+this.h/5+this.h/24-this.h/24);
+            this.batch.end();
+//            font5.draw(batch,);
             inputhandle();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -154,7 +182,10 @@ public void deserialize() throws IOException,ClassNotFoundException{
             player2=(Tank)in.readObject();
             this.tank_stars_game.setTank_1(player1);
             this.tank_stars_game.setTank_2(player2);
-
+            done = String.valueOf(player1.getHealth());
+            done = "Player 1 health "+done;
+            done_2 = String.valueOf(player2.getHealth());
+            done_2 = "Player 2 Health "+done_2;
         }
         finally {
             in.close();
@@ -167,7 +198,6 @@ public void deserialize() throws IOException,ClassNotFoundException{
             this.touchpos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             this.camera.unproject(touchpos);
             if (touchpos.x >= (this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6 && touchpos.y >=this.h/30+this.h/2+this.h/5&& touchpos.y<=this.h/30+this.h/2+this.h/5+ this.h/12){
-                    this.deserialize();
                     tank_stars_game.setScreen(new Game_Screen(this.tank_stars_game));
 
             }

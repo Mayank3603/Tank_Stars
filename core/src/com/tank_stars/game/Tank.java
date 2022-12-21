@@ -5,11 +5,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tank implements Fireweaponer , Serializable {
-    private float pos_x;
+    private float pos_x ;
     private float pos_y;
+
+    public float getPos_x() {
+        return pos_x;
+    }
+
+    public float getPos_y() {
+        return pos_y;
+    }
+
+    public void setPos_x(float pos_x) {
+        this.pos_x = pos_x;
+    }
+
+    public void setPos_y(float pos_y) {
+        this.pos_y = pos_y;
+    }
+
     private int Fuel=1000;
     private String type;
-    private int Health = 20;
+    private int Health = 200;
     private float Angle=70;
     private float shoot_power=70;
     private List<Weapons> weapons ;
