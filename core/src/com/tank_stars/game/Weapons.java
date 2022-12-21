@@ -1,9 +1,10 @@
 package com.tank_stars.game;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Weapons {
+public class Weapons implements Serializable {
     private final int damage;
     private final String colour;
     private static HashMap<String, Weapons> instances=new HashMap<String,Weapons>();

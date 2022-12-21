@@ -103,8 +103,11 @@ public class Pause_Screen implements Screen , Serializable {
                 tank_stars_game.setScreen(this.game_screen);
             }
             else if (touchpos.x >=(this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6&& touchpos.y >= this.h/30+this.h/2 && touchpos.y<=this.h/30+this.h/2+ this.h/12) {
+                System.out.println("here");
                 try {
-                    serialize();
+                    serialize(game_screen);
+                    this.calling_main_screen();
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -114,15 +117,27 @@ public class Pause_Screen implements Screen , Serializable {
             }
         }
     }
-    public void serialize() throws IOException{
-//       try{
-//           out = new ObjectOutputStream(new FileOutputStream("Gamessaved1.txt"));
-//           out.writeObject(this);
-//
-//       }
-//        finally {
-//           out.close();
-//       }
+    public  void serialize(Game_Screen game_screen) throws IOException{
+
+        ObjectOutputStream out =null;
+        Tank player1=tank_stars_game.getTank_1();
+        Tank player2=tank_stars_game.getTank_2();
+
+        try{
+
+            out =new ObjectOutputStream(new FileOutputStream("out.txt"));
+            out.writeObject(player1);
+            out.writeObject(player2);
+
+        }
+        finally {
+            out.close();
+        }
+
+
+    }
+
+    public void calling_main_screen(){
         tank_stars_game.setScreen(new Main_Screen(tank_stars_game));
     }
     @Override

@@ -112,6 +112,7 @@ public class Resume_Screen implements Screen, Serializable {
         }
 
     }
+
     @Override
     public void show() {
 
@@ -130,48 +131,43 @@ public class Resume_Screen implements Screen, Serializable {
         this.exit_button.draw(this.batch);
         this.saved_button.draw(this.batch);
         this.back_button.draw(this.batch);
+
+
+        this.batch.end();
         try {
-            deserialize();
+            inputhandle();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        this.batch.end();
-        inputhandle();
-
     }
 
 public void deserialize() throws IOException,ClassNotFoundException{
-        float change_x = this.w;
-        float change_y = this.h;
+        ObjectInputStream in =null;
+        Tank player1;
+        Tank player2;
         try{
-            for ( i = 0 ;i < 1;i++){
-                this.out = new ObjectInputStream(new FileInputStream("Gamessaved"+(i+1)+".txt"));
-//                Game_Screen t1 = (Tank_Stars_Game) out.readObject();
-//                font.get(i).draw(batch,Integer.toString(t1.getTank_1().getHealth()),change_x/2,change_y-change_y/20);
-//                font.get(i).draw(batch,Integer.toString(t1.getTank_2().getHealth()),change_x/2,change_y-change_y/20);
-                change_y = change_y - (change_y/10+change_y/30);
-                this.postion_saved_game.set(change_x,change_y,0);
-                this.postion_saved.add(i,postion_saved_game);
-            }
+            in =new ObjectInputStream(new FileInputStream("out.txt"));
+            player1=(Tank)in.readObject();
+            player2=(Tank)in.readObject();
+
+
         }
         finally {
-            if (out != null){
-                out.close();
-            }
-
+            in.close();
         }
     }
 
 
-    public void inputhandle(){
+    public void inputhandle() throws IOException, ClassNotFoundException {
         if (Gdx.input.justTouched()){
             this.touchpos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             this.camera.unproject(touchpos);
             if (touchpos.x >= (this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6 && touchpos.y >=this.h/30+this.h/2+this.h/5&& touchpos.y<=this.h/30+this.h/2+this.h/5+ this.h/12){
-                tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
+//                tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
+                    this.deserialize();
             }
             else if (touchpos.x >=(this.w/10)+this.w/3&& touchpos.x <= (this.w/10)+this.w/3+this.w/6&& touchpos.y >= this.h/30+this.h/2 && touchpos.y<=this.h/30+this.h/2+ this.h/12) {
                 tank_stars_game.setScreen(new Game_Screen(tank_stars_game));
