@@ -26,7 +26,7 @@ public class Tank implements Fireweaponer , Serializable {
 
     private int Fuel=1000;
     private String type;
-    private int Health = 200;
+    private int Health = 100;
     private float Angle=70;
     private float shoot_power=70;
     private List<Weapons> weapons ;

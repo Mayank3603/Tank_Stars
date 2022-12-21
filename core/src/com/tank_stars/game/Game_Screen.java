@@ -523,8 +523,8 @@ this.doing_world.setContactListener(new Contactlistener(this));
         try{
             string_fuel1= String.valueOf((int)(this.player1.getFuel()/100));
             string_fuel2= String.valueOf((int)(this.player2.getFuel()/100));
-            string_health1=String.valueOf(this.player1.getHealth());
-            string_health2=String.valueOf(this.player2.getHealth());
+            string_health1=String.valueOf(this.player1.getHealth())+" HP";
+            string_health2=String.valueOf(this.player2.getHealth()) + " HP";
             string_power1=String.valueOf(this.player1.getShoot_power());
             string_power2=String.valueOf(this.player1.getShoot_power());
             string_angle_of_fire1=String.valueOf(this.player1.getAngle());
