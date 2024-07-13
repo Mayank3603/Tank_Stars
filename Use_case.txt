@@ -1,0 +1,71 @@
+@startuml
+:Player:
+:Player1: <<Human>>
+:Player2: <<Human>>
+Player <|--Player1
+Player <|--Player2
+
+
+package Main_Menu{
+	usecase "New Game" as UC1
+	usecase "Play Saved Games" as UC2
+	usecase "Exit Game" as UC3
+}
+Player -> UC1
+Player -> UC2
+Player -> UC3
+
+
+(Back to Main menu) ..> UC2:<<extend>>
+
+UC1 ..> (Choose Tank ):<<include>>
+UC2 ..> (Display Saved Games):<<include >>
+
+package Game_Screen{
+	usecase "Fire Weapon" as fire
+	usecase "Move" as move
+	usecase "Set Angle" as angle 
+	usecase "Set Power" as power
+	usecase "Collect Airdrop" as collect
+}
+
+package Application_functions{
+	usecase "Set Tank Positions" as position
+	usecase "Set Tank Fuel" as fuel
+	usecase "Set Tanks Health" as health
+	usecase "Throws Airdrop" as airdrop
+	usecase "Provide Weapons to tank" as weapon
+	usecase "Set Terrain" as terrain
+	
+}
+
+
+	
+	
+	
+
+:Tank_Stars: <<Game Application>>
+Tank_Stars ->(Display Saved Games)
+Tank_Stars -> position
+Tank_Stars -> fuel
+Tank_Stars -> health
+Tank_Stars -> airdrop
+Tank_Stars -> weapon
+Tank_Stars -> terrain
+
+
+
+
+UC1 ..> fire:<<include>>
+UC1 ..> power:<<include>>
+UC1 ..> angle:<<include>>
+UC1 <.. move:<<extend>>
+UC1 <.. collect:<<extend>>
+(Save Game) ..> UC1:<<extend>>
+(Play Again) ..> UC1:<<extend>>
+
+
+
+
+
+@enduml

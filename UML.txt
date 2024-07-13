@@ -1,0 +1,153 @@
+@startuml
+
+interface Screen <<interface>>{
+	+show():void
+	+render():void
+	+pause():void
+	+resume():void
+	+hide():void
+	+dispose():void
+}
+interface Serializable <<interface>>{
+	
+	}
+class Game{
+}
+class Tank_Stars_Game extends Game{
+	- Tank tank1
+	- Tank tank2
+	+ getTank_1(): Tank
+	+ getTank_2(): Tank 
+	+ setTank_1(): void
+	+ setTank_2(): void
+	+ create(): void
+	+ render(): void
+	+ dispose(): void
+	
+}
+class Loading_Screen implements Screen{
+	- Tank_Stars_Game tank_stars_game
+	
+}
+class Main_Screen implements Screen, Serializable{
+	- Tank_Stars_Game tank_stars_game
+	+ serialize():void
+ 	+ derialize():void
+	+ inputhandle():void
+}
+class Choose_Player_1 implements Screen{
+	- Tank_Stars_Game tank_stars_game
+}
+class Resume_Screen implements Screen{
+	- Tank_Stars_Game tank_stars_game
+	+ inputhandle():void
+}
+class Choose_Player_2 implements Screen{
+	- Tank_Stars_Game tank_stars_game
+	+ inputhandle():void
+}
+class Pause_Screen implements Screen, Serializable{
+	- Tank_Stars_Game tank_stars_game
+	+ serialize():void
+ 	+ derialize():void
+	+ inputhandle():void
+	}
+class Game_Screen implements Screen{
+	- Airdrop A
+	- Tank_Stars_Game tank_stars_game
+	- Vector3 touchpos
+	+ throw_air_drop():void
+	+ inputhandle():void
+}
+ 
+interface FireWeaponer <<inteface>>{
+	+fire()
+	}
+class Tank implements FireWeaponer, Serializable{
+	- float pos_x
+	- float pos_y
+	- int Fuel
+	- int Health
+	- float Angle
+	- float shoot_power
+	- Arraylist<Weapons> weapons
+	- int weapons_quantity
+	+ setFuel(): void
+	+ setHealth(): void
+	+ add_weapons(): void
+	+ leftmove(): void
+	+ rightmove(): void
+	+ choose_weapon(): void
+	+ collect_air_drop(): void
+	+ serialize():void
+ 	+ derialize():void
+	
+	
+}
+
+class Weapons{
+	+ int damage;
+	+ String colour;
+	
+}
+class Airdrop{
+	- tank1_position_x
+	- tank1_position_y
+	- tank2_position_x
+	- tank2_position_y
+	- Weapon weapon
+	- Tank tank
+	- float drop_positon_x
+	- float drop_position_y
+	+ calculate(): void
+}
+class Helios_Tank extends Tank implements Serializable{
+	- String type="Helios Tank"
+	- ArrayList<Weapons> weapons_1
+	+ add_weapons(): void
+	+ getType(): String
+}
+class Mark_1_Tank extends Tank{
+	- String type="Mark_1_Tank"
+	- ArrayList<Weapons> weapons_1
+	+ add_weapons(): void
+	+ getType(): String
+}
+class T_34_Tank extends Tank{
+	- String type="T-34 Tank"
+	- ArrayList<Weapons> weapons_1
+	+ add_weapons(): void
+	+ getType(): String
+}
+Loading_Screen "1" *-- Main_Screen
+Main_Screen "1" *-- Choose_Player_1
+Main_Screen "1" *-- Resume_Screen
+Choose_Player_1 "1" *-- Choose_Player_2
+Choose_Player_2 "1" *-- Game_Screen
+Choose_Player_1 "1" *-- Tank
+Choose_Player_2 "1" *-- Tank
+Game_Screen "1..*" *-- Pause_Screen
+Game_Screen "1..*" *-- Airdrop
+Airdrop "1" *-- Weapons
+Tank "6" *-- Weapons
+Helios_Tank "6" *-- Weapons
+Mark_1_Tank "6" *-- Weapons
+T_34_Tank "6" *-- Weapons
+
+
+
+Tank "0..*" ..> Airdrop
+
+Loading_Screen --> Tank_Stars_Game
+Main_Screen --> Tank_Stars_Game
+Choose_Player_1 --> Tank_Stars_Game
+Choose_Player_2 --> Tank_Stars_Game
+Game_Screen --> Tank_Stars_Game
+Pause_Screen --> Tank_Stars_Game
+
+
+
+
+	
+
+@enduml
